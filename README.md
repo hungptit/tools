@@ -6,7 +6,7 @@
 
 ### mupdatedb ###
 
-This command is used to build the file information database for the **mlocate** command. mupdatedb take search paths as input argument and save file information in specified database. Use **-?** option to get detail information about to use mupdatedb
+This command is used to build the file information database for the **mlocate** command. **mupdatedb** takes search paths as input argument and save all file information in specified database path. Use **-?** option to get detail information about mupdatedb's supported options.
 
 ``` shell
 mupdatedb -?
@@ -27,7 +27,7 @@ mupdatedb src/ -d .database
 
 ### mlocate ###
 
-Assume a file information database has been created then we can use it to quickly find files using different options. Below are frequently usage
+Assume a file information database has been created then we can use it to quickly find/locate files using different options. Below are some practical examples.
 
 **Build file information database**
 This step is required before using the **mlocate** command
@@ -49,7 +49,7 @@ mupdatedb src/ include/ lib/ doc/ -d .database -v
 Database size: 2545333
 ```
 
-**Find files using simple pattern**
+**Find files using a simple search pattern**
 
 ``` shell
 mlocate -d .database Compression
@@ -62,7 +62,7 @@ src/rocksdb/java/src/main/java/org/rocksdb/CompressionOptions.java
 src/rocksdb/java/src/main/java/org/rocksdb/CompressionType.java
 ```
 
-**Find files using regular expression**
+**Find files using a regular expression pattern**
 
 ``` shell
 mlocate -d .database 'Compression.*java$'
@@ -81,7 +81,7 @@ src/folly/folly/compression/Compression.h
 ```
 
 ### mfind ###
-mfind is a alternative solution to GNU find command. This command is significantly faster and it also allows to do a lot more thing with the regular expression. Below are typical use cases for mfind.
+**mfind** is an alternative solution to [GNU find](https://www.gnu.org/software/findutils/manual/html_mono/find.html) command. This command is significantly faster than GNU find (see benchmark results below) and it also support extended regular exprssion syntax by default. Below are typical use cases for mfind.
 
 **Find files in a given folder**
 
@@ -143,7 +143,7 @@ share/zmq/NEWS.txt
 
 ### fgrep ###
 
-**fgrep** is a very fast grep like command. Out benchmark shows that **fgrep** can be 2x faster than grep for tasks with moderate or complicated regular expression patterns and it at least as fast as that of grep for simple tasks.
+**fgrep** is a very fast grep like command. Out benchmark shows that **fgrep** can be 2x faster than grep for tasks with moderate or complicated regular expression patterns and it is at least as fast as that of grep for simple tasks.
 
 **fgrep help**
 
