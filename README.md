@@ -116,7 +116,7 @@ src/rocksdb/java/src/main/java/org/rocksdb/CompressionOptions.java
 src/rocksdb/java/src/main/java/org/rocksdb/CompressionType.java
 ```
 
-**Using more complicated pattern**
+**Find files using more complicated pattern**
 ``` shell
 mfind src/ -e 'Compression.*Test'
 src/folly/folly/compression/test/CompressionTest.cpp
@@ -143,7 +143,10 @@ share/zmq/NEWS.txt
 
 ### fgrep ###
 
-**fgrep** is a very fast grep like command. Out benchmark shows that **fgrep** can be 2x faster than grep for tasks with moderate or complicated regular expression patterns and it is at least as fast as that of grep for simple tasks.
+**fgrep** is a very fast grep like command. Out benchmark results show that 
+* **fgrep** can be 2x or more faster than **grep** for tasks with moderate or complicated regular expression patterns. 
+* Our performance benchmark results have showned that fgrep and ripgrep are comparable in term of performance for small and medium files. However, **fgrep** is 2x faster than **ripgrep** for very large files i.e several GBytes log files.
+* **fgrep** can be slower than both **grep** or **ripgrep** for small files (<1K) because its binary size is much bigger than that of fgrep and ripgrep.
 
 **fgrep help**
 
