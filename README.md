@@ -49,7 +49,7 @@ mupdatedb src/ include/ lib/ doc/ -d .database -v
 Database size: 2545333
 ```
 
-**Find file using simple pattern**
+**Find files using simple pattern**
 
 ``` shell
 mlocate -d .database Compression
@@ -62,7 +62,7 @@ src/rocksdb/java/src/main/java/org/rocksdb/CompressionOptions.java
 src/rocksdb/java/src/main/java/org/rocksdb/CompressionType.java
 ```
 
-**Find all files using regular expression**
+**Find files using regular expression**
 
 ``` shell
 mlocate -d .database 'Compression.*java$'
@@ -72,7 +72,7 @@ src/rocksdb/java/src/main/java/org/rocksdb/CompressionOptions.java
 src/rocksdb/java/src/main/java/org/rocksdb/CompressionType.java
 ```
 
-**Find all files with .cpp and .h extensions**
+**Find files with .cpp and .h extensions**
 
 ``` shell
 mlocate -d .database 'Compression[.](h|cpp)$'
@@ -103,7 +103,7 @@ share/zmq/COPYING.LESSER.txt
 share/zmq/NEWS.txt
 ```
 
-**Find files using specified pattern**
+**Find files using a search pattern**
 
 ``` shell
 mfind src/ -e 'Compression'
