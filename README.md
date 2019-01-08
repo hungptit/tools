@@ -195,3 +195,60 @@ hello to them just as I would to anybody. I didn't mean to be
 --clang----and, by that time you're--hello, what's all this excitement
 a scene or two in "Othello."
 ```
+
+**Grep for lines that do not match given patterns**
+
+``` shell
+fgrep '(\||-|=)' output.log --inverse-match
+crossed thus +.'  'Henry keeps well, but broods over our troubles more
+```
+
+## Benchmark results ##
+
+### MacOS Darwin Kernel Version 16.7.0 ###
+**fgrep**
+
+``` shell
+./all_tests
+Celero
+Timer resolution: 0.001000 us
+-----------------------------------------------------------------------------------------------------------------------------------------------
+     Group      |   Experiment    |   Prob. Space   |     Samples     |   Iterations    |    Baseline     |  us/Iteration   | Iterations/sec  |
+-----------------------------------------------------------------------------------------------------------------------------------------------
+mark_twain      | grep_brew       |               0 |               5 |               1 |         1.00000 |   1336080.00000 |            0.75 |
+mark_twain      | ag              |               0 |               5 |               1 |         1.67353 |   2235972.00000 |            0.45 |
+mark_twain      | ripgrep         |               0 |               5 |               1 |         0.57323 |    765878.00000 |            1.31 |
+mark_twain      | fgrep_mmap      |               0 |               5 |               1 |         0.48081 |    642398.00000 |            1.56 |
+mark_twain      | fgrep_stream    |               0 |               5 |               1 |         0.48982 |    654445.00000 |            1.53 |
+mark_twain      | fgrep_default   |               0 |               5 |               1 |         0.48688 |    650515.00000 |            1.54 |
+Complete.
+```
+
+**mfind**
+
+``` shell
+./mfind -g boost
+Celero
+Timer resolution: 0.001000 us
+-----------------------------------------------------------------------------------------------------------------------------------------------
+     Group      |   Experiment    |   Prob. Space   |     Samples     |   Iterations    |    Baseline     |  us/Iteration   | Iterations/sec  |
+-----------------------------------------------------------------------------------------------------------------------------------------------
+boost           | gnu_find        |               0 |              10 |               1 |         1.00000 |   1013653.00000 |            0.99 |
+boost           | fd              |               0 |              10 |               1 |         1.02080 |   1034736.00000 |            0.97 |
+boost           | mfind_to_consol |               0 |              10 |               1 |         0.45755 |    463798.00000 |            2.16 |
+Complete.
+```
+
+``` shell
+./mfind -g boost_regex
+Celero
+Timer resolution: 0.001000 us
+-----------------------------------------------------------------------------------------------------------------------------------------------
+     Group      |   Experiment    |   Prob. Space   |     Samples     |   Iterations    |    Baseline     |  us/Iteration   | Iterations/sec  |
+-----------------------------------------------------------------------------------------------------------------------------------------------
+boost_regex     | gnu_find        |               0 |              10 |               1 |         1.00000 |   1001279.00000 |            1.00 |
+boost_regex     | fd              |               0 |              10 |               1 |         0.91047 |    911631.00000 |            1.10 |
+boost_regex     | mfind_to_consol |               0 |              10 |               1 |         0.46879 |    469385.00000 |            2.13 |
+Complete.
+```
+
