@@ -5,18 +5,21 @@ set +x
 
 # Install fgrep
 pushd "$working_dir/fastgrep/commands"
+cmake ./ > /dev/null
 make clean > /dev/null
 make -j5 install > /dev/null
 popd
 
 # Install mlocate, mfind, mupdatedb, and mwc
 pushd "$working_dir/ioutils/commands"
+cmake ./ > /dev/null
 make clean > /dev/null 
 make -j5 install > /dev/null
 popd
 
 # Install codesearch and source2tests
 pushd "$working_dir/codesearch/commands"
+cmake ./ > /dev/null
 make clean > /dev/null 
 make -j5 install > /dev/null
 popd
