@@ -1,7 +1,7 @@
 #!/bin/bash
 working_dir="${PWD}/../"
 echo $working_dir
-set +x
+set -eux
 
 # Install fgrep
 pushd "$working_dir/fastgrep/commands"
@@ -38,4 +38,4 @@ for cmd in $binaries; do
     cp -f "$src_dir/$cmd" "$dest_dir/$cmd"
 done
 
-set -x
+set +x
