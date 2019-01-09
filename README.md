@@ -255,3 +255,5 @@ boost_regex     | mfind_to_consol |               0 |              10 |         
 Complete.
 ```
 
+## FAQs ##
+
