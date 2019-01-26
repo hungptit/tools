@@ -3,6 +3,8 @@ working_dir="${PWD}/../"
 echo $working_dir
 set -eux
 
+build_option=${1:-"avx2"}
+
 install_binaries() {
     option=$1
     if [ $option == "sse2" ]; then
@@ -51,12 +53,8 @@ copy_binaries() {
     done
 }
 
-# Build with sse2 support
-install_binaries sse2
-copy_binaries sse2
+# Build and copy binaries to distributed folder.
+install_binaries $build_option
+copy_binaries sse2 $build_option
 
-# Build with avx2 support.
-install_binaries avx2
-copy_binaries avx2
-
-# set +x
+set +x
