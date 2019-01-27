@@ -1,4 +1,4 @@
-#!/bin/bash
+[I]#!/bin/bash
 working_dir="${PWD}/../"
 echo $working_dir
 set -eux
@@ -55,6 +55,6 @@ copy_binaries() {
 
 # Build and copy binaries to distributed folder.
 install_binaries $build_option
-copy_binaries sse2 $build_option
+copy_binaries $build_option
 
 set +x
