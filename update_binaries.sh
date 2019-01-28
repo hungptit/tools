@@ -1,4 +1,4 @@
-[I]#!/bin/bash
+#!/bin/bash
 working_dir="${PWD}/../"
 echo $working_dir
 set -eux
@@ -29,12 +29,12 @@ install_binaries() {
     make -j5 install > /dev/null
     popd
 
-    # # Install codesearch and source2tests
-    # pushd "$working_dir/codesearch/commands"
-    # cmake ./ "$cmake_options" > /dev/null
-    # make clean > /dev/null 
-    # make -j5 install > /dev/null
-    # popd
+    # Install codesearch and source2tests
+    pushd "$working_dir/codesearch/commands"
+    cmake ./ "$cmake_options" > /dev/null
+    make clean > /dev/null 
+    make -j5 install > /dev/null
+    popd
 }
 
 # Copy binaries to the destination
