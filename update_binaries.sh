@@ -46,7 +46,7 @@ copy_binaries() {
     src_dir="$HOME/bin"
     dest_dir="$platform/$architect/$release/$build_mode"
     mkdir -p $dest_dir
-    binaries="mwc fgrep mlocate mupdatedb mfind codesearch source2tests "
+    binaries="mwc fgrep mlocate mupdatedb mfind builddb codesearch source2tests "
     for cmd in $binaries; do
         echo "Copying $cmd ..."
         cp -f "$src_dir/$cmd" "$dest_dir/$cmd"
