@@ -113,6 +113,7 @@ hdang@macos ~/w/t/D/x/1/avx2> time mfind ~/working/3p/src/boost/ -e 'coroutine(\
 /Users/hdang/working/3p/src/boost/libs/coroutine/include/boost/coroutine/asymmetric_coroutine.hpp
 /Users/hdang/working/3p/src/boost/libs/coroutine/include/boost/coroutine/coroutine.hpp
 /Users/hdang/working/3p/src/boost/libs/coroutine/include/boost/coroutine/symmetric_coroutine.hpp
+        0.43 real         0.06 user         0.33 sys
 ```
 
 **Ignore cases**
@@ -146,10 +147,7 @@ hdang@macos ~/w/t/D/x/1/avx2> ./mfind --inverse-match find ./
 
 ### fgrep ###
 
-**fgrep** is a very fast grep like command. Out benchmark results show that
-    * **fgrep** can be 2x or more faster than **grep** for tasks with moderate or complicated regular expression patterns.
-    * Our performance benchmark results have showned that fgrep and ripgrep are comparable in term of performance for small and medium files. However, **fgrep** is 2x faster than **ripgrep** for very large files i.e several GBytes log files.
-    * **fgrep** can be slower than both **grep** or **ripgrep** for small files (<1K) because its binary size is much bigger than that of fgrep and ripgrep.
+**fgrep** is a very fast grep like command. Our performance benchmark results show that **fgrep** can be 2x or more faster than [grep](https://www.gnu.org/software/grep/) for tasks with moderate or complicated regular expression patterns. fgrep's performance is comparable to that [ripgrep](https://github.com/BurntSushi/ripgrep) for small or medium files and it can be 2x faster than [ripgrep](https://github.com/BurntSushi/ripgrep) for very large files i.e several GBytes log files.
 
 **fgrep help messages**
 
@@ -312,3 +310,7 @@ Complete.
 ```
 
 ## FAQs ##
+
+### License ###
+
+Our tools is only free for **non-commercial or personal usage**. Please contact us at hungptit at gmail dot com for detail information. 
