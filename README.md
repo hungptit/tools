@@ -27,57 +27,61 @@ mupdatedb src/ -d .database
 
 ### mlocate ###
 
-Assume a file information database has been created then we can use it to quickly find/locate files using different options. Below are some practical examples.
+Assume a file information database has been created then we can use it to quickly find/locate files using different options. Our benchmark results shows that mlocate at least 2x faster than that of locate for normal use cases. Below are practical examples
 
 **Build file information database**
+
 This step is required before using the **mlocate** command
 
 ``` shell
-mupdatedb src/ include/ lib/ doc/ -d .database -v
+hdang@macos ~/w/t/D/x/1/avx2> ./mupdatedb $HOME/working/ -v
 {
     "Input arguments": {
         "paths": [
-            "doc",
-            "include",
-            "lib",
-            "src"
+            "/Users/hdang/working"
         ],
         "database": ".database",
         "verbose": true
     }
 }
-Database size: 2545333
+buffer size: 19087485
 ```
 
 **Find files using a simple search pattern**
 
 ``` shell
-mlocate -d .database Compression
-src/folly/folly/compression/Compression.cpp
-src/folly/folly/compression/Compression.h
-src/folly/folly/compression/test/CompressionTest.cpp
-src/rocksdb/java/src/test/java/org/rocksdb/CompressionOptionsTest.java
-src/rocksdb/java/src/test/java/org/rocksdb/CompressionTypesTest.java
-src/rocksdb/java/src/main/java/org/rocksdb/CompressionOptions.java
-src/rocksdb/java/src/main/java/org/rocksdb/CompressionType.java
+hdang@macos ~/w/t/D/x/1/avx2> time ./mlocate 'CompressionTest'
+/Users/hdang/working/worker-3p/src/hazelcast/hazelcast/src/test/java/com/hazelcast/internal/serialization/impl/CompressionTest.java
+/Users/hdang/working/worker-3p/src/vert.x/src/test/java/io/vertx/test/core/Http2CompressionTest.java
+/Users/hdang/working/worker-3p/src/vert.x/src/test/java/io/vertx/test/core/HttpCompressionTest.java
+/Users/hdang/working/3p/src/zapcc/unittests/Support/CompressionTest.cpp
+        0.05 real         0.02 user         0.00 sys
 ```
 
 **Find files using a regular expression pattern**
 
 ``` shell
-mlocate -d .database 'Compression.*java$'
-src/rocksdb/java/src/test/java/org/rocksdb/CompressionOptionsTest.java
-src/rocksdb/java/src/test/java/org/rocksdb/CompressionTypesTest.java
-src/rocksdb/java/src/main/java/org/rocksdb/CompressionOptions.java
-src/rocksdb/java/src/main/java/org/rocksdb/CompressionType.java
+hdang@macos ~/w/t/D/x/1/avx2> time ./mlocate 'rocksdb.*Compression'
+/Users/hdang/working/backup/projects/projects/others/coverage/3p/rocksdb/java/src/main/java/org/rocksdb/CompressionOptions.java
+/Users/hdang/working/backup/projects/projects/others/coverage/3p/rocksdb/java/src/main/java/org/rocksdb/CompressionType.java
+/Users/hdang/working/backup/projects/projects/others/coverage/3p/rocksdb/java/src/test/java/org/rocksdb/CompressionTypesTest.java
+/Users/hdang/working/backup/projects/projects/others/coverage/3p/rocksdb/java/src/test/java/org/rocksdb/CompressionOptionsTest.java
+/Users/hdang/working/3p/src/rocksdb/java/src/main/java/org/rocksdb/CompressionOptions.java
+/Users/hdang/working/3p/src/rocksdb/java/src/main/java/org/rocksdb/CompressionType.java
+/Users/hdang/working/3p/src/rocksdb/java/src/test/java/org/rocksdb/CompressionTypesTest.java
+/Users/hdang/working/3p/src/rocksdb/java/src/test/java/org/rocksdb/CompressionOptionsTest.java
+        0.07 real         0.04 user         0.01 sys
 ```
 
 **Find files with .cpp and .h extensions**
 
 ``` shell
-mlocate -d .database 'Compression[.](h|cpp)$'
-src/folly/folly/compression/Compression.cpp
-src/folly/folly/compression/Compression.h
+hdang@macos ~/w/t/D/x/1/avx2> time ./mlocate 'Compression.*[cpp|hpp]$'
+/Users/hdang/working/3p/src/zapcc/lib/Support/Compression.cpp
+/Users/hdang/working/3p/src/zapcc/unittests/Support/CompressionTest.cpp
+/Users/hdang/working/3p/src/zapcc/include/llvm/Support/Compression.h
+/Users/hdang/working/3p/include/llvm/Support/Compression.h
+        0.08 real         0.04 user         0.01 sys
 ```
 
 ### mfind ###
@@ -86,69 +90,68 @@ src/folly/folly/compression/Compression.h
 **Find files in a given folder**
 
 ``` shell
-mfind share/zmq/
-share/zmq/AUTHORS.txt
-share/zmq/COPYING.txt
-share/zmq/COPYING.LESSER.txt
-share/zmq/NEWS.txt
+hdang@macos ~/w/t/D/x/1/avx2> ./mfind ./
+./source2tests
+./mlocate
+./codesearch
+./mupdatedb
+./.database
+./mfind
+./mwc
+./fgrep
 ```
 
-**Find files with given extensions**
+**Find files using regular expression**
 
 ``` shell
-mfind share/zmq/ -e '[.](txt)$'
-share/zmq/AUTHORS.txt
-share/zmq/COPYING.txt
-share/zmq/COPYING.LESSER.txt
-share/zmq/NEWS.txt
-```
-
-**Find files using a search pattern**
-
-``` shell
-mfind src/ -e 'Compression'
-src/folly/folly/compression/Compression.cpp
-src/folly/folly/compression/Compression.h
-src/folly/folly/compression/test/CompressionTest.cpp
-src/rocksdb/java/src/test/java/org/rocksdb/CompressionOptionsTest.java
-src/rocksdb/java/src/test/java/org/rocksdb/CompressionTypesTest.java
-src/rocksdb/java/src/main/java/org/rocksdb/CompressionOptions.java
-src/rocksdb/java/src/main/java/org/rocksdb/CompressionType.java
-```
-
-**Find files using more complicated pattern**
-``` shell
-mfind src/ -e 'Compression.*Test'
-src/folly/folly/compression/test/CompressionTest.cpp
-src/rocksdb/java/src/test/java/org/rocksdb/CompressionOptionsTest.java
-src/rocksdb/java/src/test/java/org/rocksdb/CompressionTypesTest.java
+hdang@macos ~/w/t/D/x/1/avx2> time mfind ~/working/3p/src/boost/ -e 'coroutine(\w_)*.hpp$'
+/Users/hdang/working/3p/src/boost/libs/asio/include/boost/asio/coroutine.hpp
+/Users/hdang/working/3p/src/boost/libs/coroutine2/include/boost/coroutine2/coroutine.hpp
+/Users/hdang/working/3p/src/boost/libs/coroutine2/include/boost/coroutine2/detail/pull_coroutine.hpp
+/Users/hdang/working/3p/src/boost/libs/coroutine2/include/boost/coroutine2/detail/coroutine.hpp
+/Users/hdang/working/3p/src/boost/libs/coroutine2/include/boost/coroutine2/detail/push_coroutine.hpp
+/Users/hdang/working/3p/src/boost/libs/coroutine/include/boost/coroutine/asymmetric_coroutine.hpp
+/Users/hdang/working/3p/src/boost/libs/coroutine/include/boost/coroutine/coroutine.hpp
+/Users/hdang/working/3p/src/boost/libs/coroutine/include/boost/coroutine/symmetric_coroutine.hpp
 ```
 
 **Ignore cases**
 
 ``` shell
-mfind src/ -e 'Compression.*Test'
-src/folly/folly/compression/test/CompressionTest.cpp
-src/rocksdb/java/src/test/java/org/rocksdb/CompressionOptionsTest.java
-src/rocksdb/java/src/test/java/org/rocksdb/CompressionTypesTest.java
+hdang@macos ~/w/t/D/x/1/avx2> time mfind ~/working/3p/src/boost/ -e 'Coroutine(\w_)*.hpp$' -i
+/Users/hdang/working/3p/src/boost/libs/asio/include/boost/asio/coroutine.hpp
+/Users/hdang/working/3p/src/boost/libs/coroutine2/include/boost/coroutine2/coroutine.hpp
+/Users/hdang/working/3p/src/boost/libs/coroutine2/include/boost/coroutine2/detail/pull_coroutine.hpp
+/Users/hdang/working/3p/src/boost/libs/coroutine2/include/boost/coroutine2/detail/coroutine.hpp
+/Users/hdang/working/3p/src/boost/libs/coroutine2/include/boost/coroutine2/detail/push_coroutine.hpp
+/Users/hdang/working/3p/src/boost/libs/coroutine/include/boost/coroutine/asymmetric_coroutine.hpp
+/Users/hdang/working/3p/src/boost/libs/coroutine/include/boost/coroutine/coroutine.hpp
+/Users/hdang/working/3p/src/boost/libs/coroutine/include/boost/coroutine/symmetric_coroutine.hpp
+        0.45 real         0.06 user         0.35 sys
 ```
 
 **Using inverse match feature i.e find files that do not match specified pattern**
 
 ``` shell
-mfind share/zmq/ --inverse-match -e 'COPYING'
-share/zmq/AUTHORS.txt
-share/zmq/NEWS.txt
+hdang@macos ~/w/t/D/x/1/avx2> ./mfind --inverse-match find ./
+./source2tests
+./mlocate
+./codesearch
+./mupdatedb
+./.database
+./mfind
+./mwc
+./fgrep
 ```
 
 ### fgrep ###
 
 **fgrep** is a very fast grep like command. Out benchmark results show that 
-* **fgrep** can be 2x or more faster than **grep** for tasks with moderate or complicated regular expression patterns. 
-* Our performance benchmark results have showned that fgrep and ripgrep are comparable in term of performance for small and medium files. However, **fgrep** is 2x faster than **ripgrep** for very large files i.e several GBytes log files.
-* **fgrep** can be slower than both **grep** or **ripgrep** for small files (<1K) because its binary size is much bigger than that of fgrep and ripgrep.
+    * **fgrep** can be 2x or more faster than **grep** for tasks with moderate or complicated regular expression patterns. 
+    * Our performance benchmark results have showned that fgrep and ripgrep are comparable in term of performance for small and medium files. However, **fgrep** is 2x faster than **ripgrep** for very large files i.e several GBytes log files.
+    * **fgrep** can be slower than both **grep** or **ripgrep** for small files (<1K) because its binary size is much bigger than that of fgrep and ripgrep.
 
-**fgrep help**
+**fgrep help messages**
 
 ``` shell
 ./fgrep --help
@@ -174,7 +177,7 @@ where options are:
 **Search for a pattern from a file**
 
 ``` shell
-fgrep hello 3200.txt
+hdang@macos ~/w/t/D/x/1/avx2> ./fgrep hello ~/working/ioutils/benchmark/3200.txt
 the rich argosies of Venetian commerce--with Othellos and Desdemonas,
 Phellow's Bosom Phriend.'  The funniest thing!--I've read it four times,
 himself to be Othello or some such character, and imagining that the
@@ -188,7 +191,7 @@ a scene or two in "Othello."
 **Grep for text from an input stream**
 
 ``` shell
-cat 3200.txt | fgrep --stdin hello
+hdang@macos ~/w/t/D/x/1/avx2> cat ~/working/ioutils/benchmark/3200.txt | ./fgrep --stdin hello
 the rich argosies of Venetian commerce--with Othellos and Desdemonas,
 Phellow's Bosom Phriend.'  The funniest thing!--I've read it four times,
 himself to be Othello or some such character, and imagining that the
@@ -204,6 +207,59 @@ a scene or two in "Othello."
 ``` shell
 fgrep '(\||-|=)' output.log --inverse-match
 crossed thus +.'  'Henry keeps well, but broods over our troubles more
+```
+
+### codesearch command ###
+
+codesearch command can be used to search for lines from indexed database. Note that the indexed database is generated using builddb command. Before using code search we do need to generate the database first then use it to search for our desired lines. Our performance benchmark results show that code search is faster than aglimpse and comparable to Google codesearch.
+
+**Generate the indexed data for RocksDB codebase**
+
+``` shell
+hdang@macos ~/w/t/D/x/1/avx2> time ./builddb -d foo ~/working/3p/src/rocksdb/ -e '[.](cpp|hpp|hh|cc|h|c|txt|md)$'
+Number of files: 808
+Read bytes: 11114650
+        0.24 real         0.05 user         0.15 sys
+```
+
+**Search for the usage of zstd**
+
+``` shell
+hdang@macos
+~/w/t/D/x/1/avx2> time ./codesearch -d foo zstd
+/Users/hdang/working/3p/src/rocksdb//CMakeLists.txt:92:  option(WITH_ZSTD "build with zstd" OFF)
+/Users/hdang/working/3p/src/rocksdb//CMakeLists.txt:94:    find_package(zstd REQUIRED)
+/Users/hdang/working/3p/src/rocksdb//HISTORY.md:230:* Allow preset compression dictionary for improved compression of block-based tables. This is supported for zlib, zstd, and lz4. The compression dictionary's size is configurable via CompressionOptions::max_dict_bytes.
+/Users/hdang/working/3p/src/rocksdb//INSTALL.md:38:  - [zstandard](http://www.zstd.net) - Fast real-time compression
+/Users/hdang/working/3p/src/rocksdb//INSTALL.md:58:    * Install zstandard: `sudo apt-get install libzstd-dev`.
+/Users/hdang/working/3p/src/rocksdb//INSTALL.md:96:             wget https://github.com/facebook/zstd/archive/v1.1.3.tar.gz
+/Users/hdang/working/3p/src/rocksdb//INSTALL.md:97:             mv v1.1.3.tar.gz zstd-1.1.3.tar.gz
+/Users/hdang/working/3p/src/rocksdb//INSTALL.md:98:             tar zxvf zstd-1.1.3.tar.gz
+/Users/hdang/working/3p/src/rocksdb//INSTALL.md:99:             cd zstd-1.1.3
+/Users/hdang/working/3p/src/rocksdb//include/rocksdb/c.h:926:  rocksdb_zstd_compression = 7
+/Users/hdang/working/3p/src/rocksdb//table/format.cc:557:        static char zstd_corrupt_msg[] =
+/Users/hdang/working/3p/src/rocksdb//table/format.cc:559:        return Status::Corruption(zstd_corrupt_msg);
+/Users/hdang/working/3p/src/rocksdb//tools/db_bench_tool.cc:694:  else if (!strcasecmp(ctype, "zstd"))
+/Users/hdang/working/3p/src/rocksdb//tools/db_stress.cc:435:  else if (!strcasecmp(ctype, "zstd"))
+/Users/hdang/working/3p/src/rocksdb//tools/ldb_cmd.cc:557:    } else if (comp == "zstd") {
+/Users/hdang/working/3p/src/rocksdb//tools/ldb_tool.cc:52:             "=<no|snappy|zlib|bzip2|lz4|lz4hc|xpress|zstd>\n");
+/Users/hdang/working/3p/src/rocksdb//util/compression.h:37:#include <zstd.h>
+        0.11 real         0.05 user         0.02 sys
+```
+
+## source2tests command ##
+
+This command will output the list of tests given the search pattern and path constraints. It works well with any language given users know hoiw the pattern of their tests. Below is the simple example, which find the list of RocksDB C++ test that interract with zstd library.
+
+**Get the list of tests that use zstd**
+
+``` shell
+hdang@macos ~/w/t/D/x/1/avx2> time ./source2tests  -d foo 'zstd' -p '[.](cpp|cc)$'
+/Users/hdang/working/3p/src/rocksdb//table/format.cc
+/Users/hdang/working/3p/src/rocksdb//tools/db_bench_tool.cc
+/Users/hdang/working/3p/src/rocksdb//tools/db_stress.cc
+/Users/hdang/working/3p/src/rocksdb//tools/ldb_cmd.cc
+/Users/hdang/working/3p/src/rocksdb//tools/ldb_tool.cc
 ```
 
 ## Benchmark results ##
