@@ -262,26 +262,26 @@ hdang@macos ~/w/t/D/x/1/avx2> time ./source2tests  -d foo 'zstd' -p '[.](cpp|cc)
 
 ## Benchmark results ##
 
-### MacOS Darwin Kernel Version 16.7.0 ###
-**fgrep**
+### MacOS Darwin Kernel Version 18.2.0 ###
+
+#### fgrep ####
 
 ``` shell
-./all_tests
+macos:benchmark hdang$ ./all_tests
 Celero
 Timer resolution: 0.001000 us
 -----------------------------------------------------------------------------------------------------------------------------------------------
      Group      |   Experiment    |   Prob. Space   |     Samples     |   Iterations    |    Baseline     |  us/Iteration   | Iterations/sec  |
 -----------------------------------------------------------------------------------------------------------------------------------------------
-mark_twain      | grep_brew       |               0 |               5 |               1 |         1.00000 |   1336080.00000 |            0.75 |
-mark_twain      | ag              |               0 |               5 |               1 |         1.67353 |   2235972.00000 |            0.45 |
-mark_twain      | ripgrep         |               0 |               5 |               1 |         0.57323 |    765878.00000 |            1.31 |
-mark_twain      | fgrep_mmap      |               0 |               5 |               1 |         0.48081 |    642398.00000 |            1.56 |
-mark_twain      | fgrep_stream    |               0 |               5 |               1 |         0.48982 |    654445.00000 |            1.53 |
-mark_twain      | fgrep_default   |               0 |               5 |               1 |         0.48688 |    650515.00000 |            1.54 |
+mark_twain      | grep            |               0 |               5 |               1 |         1.00000 |   1243421.00000 |            0.80 |
+mark_twain      | ag              |               0 |               5 |               1 |         1.88157 |   2339587.00000 |            0.43 |
+mark_twain      | ripgrep         |               0 |               5 |               1 |         0.69388 |    862789.00000 |            1.16 |
+mark_twain      | fgrep_mmap      |               0 |               5 |               1 |         0.59429 |    738955.00000 |            1.35 |
+mark_twain      | fgrep_default   |               0 |               5 |               1 |         0.52595 |    653983.00000 |            1.53 |
 Complete.
 ```
 
-**mfind**
+#### mfind ####
 
 ``` shell
 ./mfind -g boost
@@ -309,8 +309,10 @@ boost_regex     | mfind_to_consol |               0 |              10 |         
 Complete.
 ```
 
+#### mlocate ####
+
 ## FAQs ##
 
 ### License ###
 
-Our tools is only free for **non-commercial or personal usage**. Please contact us at hungptit at gmail dot com for detail information. 
+Our tools is only free for **non-commercial or personal usage**. Please contact us at **hungptit at gmail dot com** for detail information. 
