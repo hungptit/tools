@@ -15,7 +15,7 @@ Above binaries are portable and we should be able to execute/run them on any Lin
 
 ## How to use tools ##
 
-All precompiled binaries should be able to execute on any Linux and MacOS machines. To use these binary go to a folder that you want to store **tools** folder then run below commands.
+All precompiled binaries are portable and should be able to execute/run on any Linux and MacOS machine. Below are simple setup steps machines assuming git command has already been installed.
 
 **MacOS**
 ``` shell
