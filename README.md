@@ -1,8 +1,44 @@
-# tools
+# Tools
 
 ## Introduction ##
 
+This repository contains precompiled binaries for below commands for Linux, MacOS, and Window Linux Subsystem.
+* mupdatedb
+* mlocate
+* mfind
+* fgrep
+* builddb
+* codesearch
+* source2tests
+
+Above binaries are portable and we should be able to execute/run them on any Linux, MacOS, and Window Linux Subsystem that support either AVX2 or SSE2. Send me an email or create a github ticket if these binaries doesn't work for you.
+
+## How to use tools ##
+
+All precompiled binaries should be able to execute on any Linux and MacOS machines. To use these binary go to a folder that you want to store **tools** folder then run below commands.
+
+**MacOS**
+``` shell
+git clone -b master https://github.com/hungptit/tools.git
+cd tools
+source setup.sh Darwin/x86_64/18.2.0/avx2/
+```
+
+**Linux**
+
+``` shell
+git clone -b master https://github.com/hungptit/tools.git
+cd tools
+source setup.sh Linux/x86_64/4.4.0-17134-Microsoft/sse2/
+```
+
+**Notes**
+* If you are using < 5 years old machine then you should use binaries compiled using AVX2 otherwise use binaries compiled using SSE2.
+* The above steps can be used on Linux, MacOS, and Window Linux Subsystem.
+
 ## Tutorial ##
+
+Below are some practical usage of provided commands.
 
 ### mupdatedb ###
 
@@ -207,6 +243,67 @@ fgrep '(\||-|=)' output.log --inverse-match
 crossed thus +.'  'Henry keeps well, but broods over our troubles more
 ```
 
+**Search for a pattern from selected set of file**
+
+Search for a zstd pattern from *.cc file in rocksdb repository
+
+``` shell
+ATH020224:src hdang$ time fgrep zstd rocksdb/ -p '[.](cc)$' -n
+rocksdb//table/format.cc:557:        static char zstd_corrupt_msg[] =
+rocksdb//table/format.cc:559:        return Status::Corruption(zstd_corrupt_msg);
+rocksdb//tools/db_bench_tool.cc:694:  else if (!strcasecmp(ctype, "zstd"))
+rocksdb//tools/ldb_cmd.cc:557:    } else if (comp == "zstd") {
+rocksdb//tools/db_stress.cc:435:  else if (!strcasecmp(ctype, "zstd"))
+rocksdb//tools/ldb_tool.cc:52:             "=<no|snappy|zlib|bzip2|lz4|lz4hc|xpress|zstd>\n");
+
+real    0m0.046s
+user    0m0.017s
+sys     0m0.027s
+```
+
+Search for the usage of **kZSTD** in rocksdb codebase using case insensitive option
+
+``` shell
+ATH020224:src hdang$ time fgrep -i kzstd rocksdb/ -p '[.](cc|h)$' -n
+rocksdb//db/db_test2.cc:1056:    compression_types.push_back(kZSTD);
+rocksdb//db/db_statistics_test.cc:39:    type = kZSTD;
+rocksdb//db/db_test.cc:892:    type = kZSTD;
+rocksdb//table/block_based_table_builder.cc:166:    case kZSTD:
+rocksdb//table/block_based_table_builder.cc:167:    case kZSTDNotFinalCompression:
+rocksdb//table/format.cc:553:    case kZSTD:
+rocksdb//table/format.cc:554:    case kZSTDNotFinalCompression:
+rocksdb//table/table_test.cc:604:    compression_types.emplace_back(kZSTD, false);
+rocksdb//table/table_test.cc:605:    compression_types.emplace_back(kZSTD, true);
+rocksdb//utilities/column_aware_encoding_exp.cc:84:        {"kZSTD", CompressionType::kZSTD}};
+rocksdb//java/rocksjni/portal.h:2173:      case rocksdb::CompressionType::kZSTD:
+rocksdb//java/rocksjni/portal.h:2201:        return rocksdb::CompressionType::kZSTD;
+rocksdb//include/rocksdb/options.h:66:  kZSTD = 0x7,
+rocksdb//include/rocksdb/options.h:68:  // Only use kZSTDNotFinalCompression if you have to use ZSTD lib older than
+rocksdb//include/rocksdb/options.h:71:  // RocksDB that doesn't have kZSTD. Otherwise, you should use kZSTD. We will
+rocksdb//include/rocksdb/options.h:73:  kZSTDNotFinalCompression = 0x40,
+rocksdb//util/compression.h:118:    case kZSTDNotFinalCompression:
+rocksdb//util/compression.h:120:    case kZSTD:
+rocksdb//util/compression.h:144:    case kZSTD:
+rocksdb//util/compression.h:145:    case kZSTDNotFinalCompression:
+rocksdb//tools/db_bench_tool.cc:695:    return rocksdb::kZSTD;
+rocksdb//tools/db_bench_tool.cc:1915:      case rocksdb::kZSTD:
+rocksdb//tools/db_bench_tool.cc:2852:      case rocksdb::kZSTD:
+rocksdb//tools/ldb_cmd.cc:558:      opt.compression = kZSTD;
+rocksdb//tools/db_stress.cc:436:    return rocksdb::kZSTD;
+rocksdb//tools/sst_dump_tool.cc:72:        {CompressionType::kZSTD, "kZSTD"}};
+rocksdb//tools/db_sanity_test.cc:189:    options_.compression = kZSTD;
+rocksdb//options/options_helper.h:626:        {"kZSTD", kZSTD},
+rocksdb//options/options_helper.h:627:        {"kZSTDNotFinalCompression", kZSTDNotFinalCompression},
+rocksdb//options/options_test.cc:60:       "kZSTD:"
+rocksdb//options/options_test.cc:61:       "kZSTDNotFinalCompression"},
+rocksdb//options/options_test.cc:154:  ASSERT_EQ(new_cf_opt.compression_per_level[7], kZSTD);
+rocksdb//options/options_test.cc:155:  ASSERT_EQ(new_cf_opt.compression_per_level[8], kZSTDNotFinalCompression);
+
+real    0m0.080s
+user    0m0.024s
+sys     0m0.045s
+```
+ 
 ### codesearch command ###
 
 codesearch command can be used to search for lines from indexed database. Note that the indexed database is generated using builddb command. Before using code search we do need to generate the database first then use it to search for our desired lines. Our performance benchmark results show that code search is faster than aglimpse and comparable to Google codesearch.
@@ -315,4 +412,4 @@ Complete.
 
 ### License ###
 
-Our tools is only free for **non-commercial or personal usage**. Please contact us at **hungptit at gmail dot com** for detail information. 
+Our tools is only free for **non-commercial or personal usage**. Please contact us at **hungptit at gmail dot com** for detail information.

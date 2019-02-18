@@ -1,5 +1,5 @@
 class: center, middle
-# Impossible Engineering Problems Often Aren't: How can I do source to test mapping with AthenaNet codebase
+# Impossible Engineering Problems Often Aren't: How can we do source to test mapping with AthenaNet codebase
 
 ---
 # What is source to test mapping?
@@ -153,11 +153,11 @@ class: center, middle
 # What is the new challenge? #
 
 --
-- Create a very fast code search engine that can handle 
+- Create a very fast code search engine that can handle
   - Large code base
   - Handle a decent amount of requests per second.
   - Provide command line/REST/HTTP interfaces.
-  
+
 ---
 
 # codesearch: A fast and efficient code search engine #
@@ -165,10 +165,10 @@ class: center, middle
 --
 - Written using modern C++.
 
--- 
+--
 - Strongly focused in user experience.
 
--- 
+--
 - Build on top of very high performance libraries such as hyperscan, ioutils, utils, zstd, and rocksdb.
 
 --
@@ -177,6 +177,21 @@ class: center, middle
 ---
 class: center, middle
 # Simple examples #
+
+--
+* [aglimpse usage](https://social.athenahealth.com/people/nandreev/blog/2019/02/07/speeding-up-athenacodeutilsafeuse-preloading-subsystems)
+
+``` shell
+aglimpse 'SafeUse(' | grep -v intranet | grep -v _Test.pm | grep -v '/test/'|  wc -l
+```
+
+--
+* Similar codesearch/source2tests command
+
+``` shell
+source2tests 'SafeUse\(' -p '_Test[.]pm'
+```
+
 
 ---
 
@@ -199,7 +214,7 @@ class: center, middle
 - Can support multiple languages.
 
 --
-- Work well with large code base i.e several million lines of code. 
+- Work well with large code base i.e several million lines of code.
 
 --
 - The response time for one request is a fraction of second.
@@ -234,3 +249,7 @@ class: center, middle
 --
 - Our solution: Static linked binaries.
 
+
+---
+
+# Q/A #
