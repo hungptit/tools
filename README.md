@@ -48,11 +48,11 @@ source setup.sh Linux/x86_64/4.4.0-17134-Microsoft/avx2/
 
 ## Tutorial ##
 
-Below are some practical usage of provided commands.
+Below are some practical exampeles for mlocate, mfind, fgrep, codesearch, and source2tests command.
 
 ### mupdatedb ###
 
-This command is used to build the file information database for the **mlocate** command. **mupdatedb** takes search paths as input argument and save all file information in specified database path. Use **-?** option to get detail information about mupdatedb's supported options.
+This command will build the file information database for the **mlocate** command. **mupdatedb** takes search paths as input arguments and save all file information in specified database path. Use **-h** or **--help** options to get detail information about supported input options.
 
 ``` shell
 mupdatedb -?
@@ -73,7 +73,7 @@ mupdatedb src/ -d .database
 
 ### mlocate ###
 
-Assume a file information database has been created then we can use it to quickly find/locate files using different options. Our benchmark results shows that mlocate at least 2x faster than that of locate for normal use cases. Below are practical examples
+Assume a file information database has been created then we can use it to quickly find/locate files using different options.
 
 **Build file information database**
 
@@ -131,7 +131,7 @@ hdang@macos ~/w/t/D/x/1/avx2> time ./mlocate 'Compression.*[cpp|hpp]$'
 ```
 
 ### mfind ###
-**mfind** is an alternative solution to [GNU find](https://www.gnu.org/software/findutils/manual/html_mono/find.html) command. This command is significantly faster than GNU find (see benchmark results below) and it also support extended regular exprssion syntax by default. Below are typical use cases for mfind.
+**mfind** is an alternative solution to [GNU find](https://www.gnu.org/software/findutils/manual/html_mono/find.html) command with a similar syntax. Use **mfind --help** to get detail information about input arguments.
 
 **Find files in a given folder**
 
@@ -193,7 +193,7 @@ hdang@macos ~/w/t/D/x/1/avx2> ./mfind --inverse-match find ./
 
 ### fgrep ###
 
-**fgrep** is a very fast grep like command. Our performance benchmark results show that **fgrep** can be 2x or more faster than [grep](https://www.gnu.org/software/grep/) for tasks with moderate or complicated regular expression patterns. fgrep's performance is comparable to that [ripgrep](https://github.com/BurntSushi/ripgrep) for small or medium files and it can be 2x faster than [ripgrep](https://github.com/BurntSushi/ripgrep) for very large files i.e several GBytes log files.
+**fgrep** input argument is very similar to that of GNU grep. Use **fgrep --help** to get detail information about the input arguments.
 
 **fgrep help messages**
 
@@ -316,7 +316,7 @@ sys     0m0.045s
  
 ### codesearch command ###
 
-codesearch command can be used to search for lines from indexed database. Note that the indexed database is generated using builddb command. Before using code search we do need to generate the database first then use it to search for our desired lines. Our performance benchmark results show that code search is faster than aglimpse and comparable to Google codesearch.
+codesearch command can be used to search for lines from indexed database. Note that codesearch's indexed database is generated using **builddb** command. 
 
 **Generate the indexed data for RocksDB codebase**
 
@@ -354,12 +354,12 @@ hdang@macos
 
 ## source2tests command ##
 
-This command will output the list of tests given the search pattern and path constraints. It works well with any language given users know hoiw the pattern of their tests. Below is the simple example, which find the list of RocksDB C++ test that interract with zstd library.
+**source2tests** will output the list of tests for a given the search pattern and a path constraint. It works well with any programming language if users can construct search patterns for their source code changes. Below is the simple example which finds the list of RocksDB C++ source files that use with zstd library.
 
-**Get the list of tests that use zstd**
+**Get the list of source files that use zstd**
 
 ``` shell
-hdang@macos ~/w/t/D/x/1/avx2> time ./source2tests  -d foo 'zstd' -p '[.](cpp|cc)$'
+hdang@macos ~/w/t/D/x/1/avx2> time ./source2tests  -d rocksdb.db 'zstd' -p '[.](cpp|cc)$'
 /Users/hdang/working/3p/src/rocksdb//table/format.cc
 /Users/hdang/working/3p/src/rocksdb//tools/db_bench_tool.cc
 /Users/hdang/working/3p/src/rocksdb//tools/db_stress.cc
