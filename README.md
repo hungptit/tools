@@ -25,7 +25,7 @@ Our [performance benchmark results](#Benchmark results) show that
 
 ## How to use tools ##
 
-All precompiled binaries are portable and should be able to execute/run on any Linux and MacOS machine. **Below are simple setup steps machines assuming git command has already been installed**:
+All precompiled binaries are portable and should be able to execute/run on any Linux and MacOS machine. **Below are simple setup steps assuming git command has already been installed**:
 
 **MacOS**
 ``` shell
