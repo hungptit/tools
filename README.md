@@ -48,7 +48,7 @@ source setup.sh Linux/x86_64/4.4.0-17134-Microsoft/avx2/
 
 ## Tutorial ##
 
-Below are some practical exampeles for mlocate, mfind, fgrep, codesearch, and source2tests command.
+Below are some practical examples for mlocate, mfind, fgrep, codesearch, and source2tests commands.
 
 ### mupdatedb ###
 
