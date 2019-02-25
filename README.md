@@ -2,7 +2,7 @@
 
 ## Introduction ##
 
-This repository contains precompiled binaries for below commands for Linux, MacOS, and Window Linux Subsystem.
+This repository contains precompiled binaries for below commands:
 * mupdatedb
 * mlocate
 * mfind
@@ -11,7 +11,7 @@ This repository contains precompiled binaries for below commands for Linux, MacO
 * **codesearch**
 * **source2tests**
 
-Above binaries are portable and we should be able to execute/run them on any Linux, MacOS, and Window Linux Subsystem machine that support either AVX2 or SSE2. Send me an email or create a github ticket if any binary doesn't work on your machine.
+All binaries are portable and we should be able to execute/run them on any Linux, MacOS, and Window Linux Subsystem machine that support either AVX2 or SSE2. Email me or create a github ticket if it doesn't work on your machine.
 
 ## Why do we need these tools ##
 
