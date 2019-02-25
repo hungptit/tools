@@ -8,14 +8,24 @@ This repository contains precompiled binaries for below commands for Linux, MacO
 * mfind
 * fgrep
 * builddb
-* codesearch
-* source2tests
+* **codesearch**
+* **source2tests**
 
 Above binaries are portable and we should be able to execute/run them on any Linux, MacOS, and Window Linux Subsystem machine that support either AVX2 or SSE2. Send me an email or create a github ticket if any binary doesn't work on your machine.
 
+## Why do we need these tools ##
+
+Our [performance benchmark results](#Benchmark results) show that
+
+* **mlocate** is 10x or more faster than **GNU locate**.
+* **fgrep** is the fastest single thread text searching command.
+* **mfind** is 1.5-2x faster than GNU find command.
+* **codesearch** is faster than aglimpse and is as fast as Google codesearch for code searching purpose. The commercial version of codesearch is significantly faster than both **Google codesearch** and **aglimpse**.
+* **source2tests** is a static code analysis tool which can identify tests need to run for any source code changes. This command has been working well for large code base with 100K of several million lines of code.
+
 ## How to use tools ##
 
-All precompiled binaries are portable and should be able to execute/run on any Linux and MacOS machine. Below are simple setup steps machines assuming git command has already been installed.
+All precompiled binaries are portable and should be able to execute/run on any Linux and MacOS machine. **Below are simple setup steps machines assuming git command has already been installed**:
 
 **MacOS**
 ``` shell
@@ -29,12 +39,12 @@ source setup.sh Darwin/x86_64/18.2.0/avx2/
 ``` shell
 git clone -b master https://github.com/hungptit/tools.git
 cd tools
-source setup.sh Linux/x86_64/4.4.0-17134-Microsoft/sse2/
+source setup.sh Linux/x86_64/4.4.0-17134-Microsoft/avx2/
 ```
 
 **Notes**
-* If you are using < 5 years old machine then you should use binaries compiled using AVX2 otherwise use binaries compiled using SSE2.
-* The above steps can be used on Linux, MacOS, and Window Linux Subsystem.
+* If you are using < 5 years old machines then you should use binaries compiled using AVX2 otherwise use binaries compiled using SSE2.
+* The above steps should work on any Linux, MacOS, and Window Linux Subsystem environment.
 
 ## Tutorial ##
 
@@ -408,8 +418,21 @@ Complete.
 
 #### mlocate ####
 
+**mlocate** is consistently 10x faster than **GNU locate** in our tests. Below are benchmark results collected on MacOS
+
+``` shell
+Celero
+Timer resolution: 0.001000 us
+-----------------------------------------------------------------------------------------------------------------------------------------------
+     Group      |   Experiment    |   Prob. Space   |     Samples     |   Iterations    |    Baseline     |  us/Iteration   | Iterations/sec  |
+-----------------------------------------------------------------------------------------------------------------------------------------------
+regex           | gnu_locate      |               0 |              10 |               1 |         1.00000 |    352569.00000 |            2.84 |
+regex           | mlocate         |               0 |              10 |               1 |         0.06956 |     24524.00000 |           40.78 |
+Complete.
+```
+
 ## FAQs ##
 
 ### License ###
 
-Our tools is only free for **non-commercial or personal usage**. Please contact us at **hungptit at gmail dot com** for detail information.
+**codesearch** and **source2tests** are only free for **non-commercial or personal usage**. Please contact me at **hungptit at gmail dot com** for detail information.
