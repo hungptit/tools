@@ -15,7 +15,7 @@ All binaries are portable and we should be able to execute/run them on any Linux
 
 ## Why do we need these tools ##
 
-Our [performance benchmark results](#Benchmark results) show that
+Our performance benchmark results show that
 
 * **mlocate** is 10x or more faster than **GNU locate**.
 * **fgrep** is the fastest single thread text searching command.
