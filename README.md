@@ -11,7 +11,7 @@ This repository contains precompiled binaries for below commands:
 * **codesearch**
 * **source2tests**
 
-All binaries are portable and we should be able to execute/run them on any Linux, MacOS, and Window Linux Subsystem machine that support either AVX2 or SSE2. Email me or create a github ticket if it doesn't work on your machine.
+All binaries are portable and we should be able to execute/run them on any Linux, MacOS, and Window Linux Subsystem machine that supports either AVX2 or SSE2. Email me or create a github ticket if it doesn't work on your machine.
 
 ## Why do we need these tools ##
 
