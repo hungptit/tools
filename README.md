@@ -21,7 +21,7 @@ Our [performance benchmark results](#Benchmark results) show that
 * **fgrep** is the fastest single thread text searching command.
 * **mfind** is 1.5-2x faster than GNU find command.
 * **codesearch** is faster than aglimpse and is as fast as Google codesearch for code searching purpose. The commercial version of codesearch is significantly faster than both **Google codesearch** and **aglimpse**.
-* **source2tests** is a static code analysis tool which can identify tests need to run for any source code changes. This command has been working well for large code base with 100K of several million lines of code.
+* **source2tests** is a static code analysis tool which can identify tests need to run for any source code change. This command works well for large projects with million lines of code.
 
 ## How to use tools ##
 
