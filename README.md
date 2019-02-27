@@ -2,14 +2,14 @@
 
 ## Introduction ##
 
-This repository contains precompiled binaries for below commands for Linux, MacOS, and Window Linux Subsystem.
-* mupdatedb
-* mlocate
-* mfind
-* fgrep
-* builddb
-* **codesearch**
-* **source2tests**
+This repository contains a collections of productivity commands that can significantly improve the development workflow for large scale software projects. 
+* mupdatedb: Build the file information database for mlocate.
+* mlocate: Locate files and folders using the file information database created by mupdatedb.
+* mfind: Find files from folders.
+* fgrep: Search for matched lines from given files or folders.
+* builddb: Generate the indexed file content database which will be used by codesearch and source2tests commands.
+* **codesearch**: An indexing and query engine that allows users to quickly search for matched lines from an indexed database.
+* **source2tests**: A static text analysis engine that can compute a list of tests for a set of source files
 
 Above binaries are portable and we should be able to execute/run them on any Linux, MacOS, and Window Linux Subsystem machine that support either AVX2 or SSE2. Send me an email or create a github ticket if any binary doesn't work on your machine.
 
@@ -21,7 +21,7 @@ Our [performance benchmark results](#Benchmark results) show that
 * **fgrep** is the fastest single thread text searching command.
 * **mfind** is 1.5-2x faster than GNU find command.
 * **codesearch** is faster than aglimpse and is as fast as Google codesearch for code searching purpose. The commercial version of codesearch is significantly faster than both **Google codesearch** and **aglimpse**.
-* **source2tests** is a static code analysis tool which can identify tests need to run for any source code changes. This command has been working well for large code base with 100K of several million lines of code.
+* **source2tests** is a static code analysis tool which can identify tests need to run for any source code changes. This command works well with large codebases with million lines of code.
 
 ## How to use tools ##
 
