@@ -336,4 +336,5 @@ Binaries for MacOS can be downloaded from this [link](https://github.com/hungpti
 *The confluence page will be available soon*. In the mean time, you can get basic information about my tool [here](https://github.com/hungptit/tools/blob/master/README.md)  or ping me over slack for more information.
 
 ---
+class: center, middle
 # Thank you #
