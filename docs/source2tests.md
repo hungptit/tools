@@ -327,7 +327,7 @@ time source2tests '(use|require)\s+Document' -p '(_Test[.]pm|[.]t)$' | wc
 # FAQs #
 
 * How can use your tools?
-All binaries can be found here **~hdang/bin**.
+All binaries can be found here **~hdang/bin** and they should work on any development servers.
 
 * How can I download binaries for MacOS?
 Binaries for MacOS can be downloaded from this [link](https://github.com/hungptit/tools/tree/master/Darwin/x86_64).
