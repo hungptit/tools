@@ -32,7 +32,7 @@ Our performance benchmark results show that:
 
 * **codesearch** is faster than aglimpse and is as fast as Google codesearch for code searching purpose. The commercial version of codesearch is significantly faster than both **Google codesearch** and **aglimpse**.
 
-* **source2tests** is a static code analysis tool which can identify tests need to run for any source code changes. This command works well with large codebases with million lines of code.
+* **source2tests** is a static code analysis tool which can identify tests need to run for any source code change. This command works well with large codebases i.e projects with million lines of code.
 
 ## How can I use these commands? ##
 
