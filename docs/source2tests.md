@@ -10,7 +10,7 @@ class: center, middle
 **A software bug is an error, flaw, failure or fault in a computer program or system that causes it to produce an incorrect or unexpected result, or to behave in unintended ways.**
 
 ---
-# [How do we get a software bug?](https://www.softwaretestinghelp.com/why-does-software-have-bugs/)
+# [Why does software have bugs?](https://www.softwaretestinghelp.com/why-does-software-have-bugs/)
 
 --
 
