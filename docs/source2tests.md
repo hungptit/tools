@@ -381,11 +381,14 @@ time source2tests '(use|require)\s+Document' -p '(_Test[.]pm|[.]t)$' | wc
 ---
 # FAQs #
 
-* How can use your tools?
+* How can I use your tools?
 All binaries can be found here **~hdang/bin** and they should work on any development servers.
 
-* How can I download binaries for MacOS?
+* Where can I find binaries for MacOS?
 Binaries for MacOS can be downloaded from this [link](https://github.com/hungptit/tools/tree/master/Darwin/x86_64).
+
+* Do you support Window Linux Subsystem?
+Binaries for Window Linux Subsystem can be downloaded from this [link](https://github.com/hungptit/tools/tree/master/Linux/x86_64/4.4.0-17134-Microsoft).
 
 * Do you have any document for your tools?
 *The confluence page will be available soon*. In the mean time, you can get basic information about my tool [here](https://github.com/hungptit/tools/blob/master/README.md)  or ping me over slack for more information.
@@ -393,3 +396,11 @@ Binaries for MacOS can be downloaded from this [link](https://github.com/hungpti
 ---
 class: center, middle
 # Thank you #
+
+---
+
+# Acknowledgement #
+
+* Mia Morreti
+
+* Zac Bentley
