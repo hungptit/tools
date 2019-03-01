@@ -7,7 +7,7 @@ class: center, middle
 
 --
 
-**A software bug is an error, flaw, failure or fault in a computer program or system that causes it to produce an incorrect or unexpected result, or to behave in unintended ways.**
+*A software bug is an error, flaw, failure or fault in a computer program or system that causes it to produce an incorrect or unexpected result, or to behave in unintended ways.*
 
 ---
 # [Why does software have bugs?](https://www.softwaretestinghelp.com/why-does-software-have-bugs/)
@@ -86,31 +86,49 @@ class: center, middle
 # What is the complexity of our Perl codebase? #
 
 --
+* What is the current number of Perl files?
 ``` shell
-linux:~> mlocate '[.](pm|pl|t)$' | wc
-  58258   58258 3905353
-
-linux:~> mlocate '(_Test[.]pm|[.]t)$' | wc
-  14749   14749 1133612
-
-linux:~> codesearch '\w*;$' -p '([.]pm|[.]pl)$' | wc
-3536002 15046121 353993898
-
-linux:~> codesearch '\w*;$' -p '(_Test[.]pm)$' | wc
- 542015 1928026 53546006
+mlocate '[.](pm|pl|t)$' | wc -l
+58258
 ```
 
 --
+* What is the current number of test files?
 ``` shell
-linux:~> codesearch '\w*;$' -p '(_Test[.]pm|[.]pl)$' | wc
- 771955 3013430 76629514
+mlocate '(_Test[.]pm|[.]t)$' | wc -l
+14749
 ```
 
 --
+* What is the number of LOC?
+``` shell
+codesearch '\w*;$' -p '([.]pm|[.]pl)$' | wc -l
+3712218
+```
+
+---
+# What is the complexity of our Perl codebase? (cont) #
+
+--
+* What is the current number of test LOC?
+``` shell
+codesearch '\w*;$' -p '(_Test[.]pm|[.]t)$' | wc -l
+850256
+```
+
+--
+* What is the estimated runtime?
 ``` shell
 >>> 14749 * 10 / 3600.0
 40.96944444444444
 ```
+
+---
+
+# What is a source to test map #
+
+--
+*It is a map from a source code line to test files or test points that will execute or excersise this source code line.*
 
 ---
 # Why do we need source to test mapping? #
@@ -128,7 +146,7 @@ linux:~> codesearch '\w*;$' -p '(_Test[.]pm|[.]pl)$' | wc
 * **Scalability:** Have **a similar results** as running all tests with much lower runtime complexity i.e much a smaller set of tests.
 
 ---
-# What do we currently do?
+# What do we currently do int the submit_files script?
 
 --
 ``` shell
@@ -144,7 +162,7 @@ Did you verify that all the tests listed above pass? (yes/no)
 ```
 
 ---
-# What should we do? #
+# Is it correct? #
 
 --
 
@@ -166,27 +184,10 @@ class: center, middle
 
 --
 
-* **Give me a set of tests that I need to run to qualify source code changes.**
+* **Give me a set of tests that excersise given set of source code lines.**
 
 ---
 
-# What are the requirements? #
-
---
-
-* Can return the list of tests need to run quickly i.e at most couple of seconds.
-
---
-
-* **Just work.**
-
-    * Work out of the box for supported development and staging environments.
-
-    * A friendly command line interface.
-
-    * Support HTTP/REST interfaces (nice to have).
-
----
 # Possible solutions #
 
 --
@@ -194,14 +195,55 @@ class: center, middle
 
     * Pros: Gives the best results.
 
-    * Cons: Very expensive **> 100 CPU hours**.
+    * Cons: Very expensive.
+
+--
+* Estimated runtime in CPU hours
+``` shell
+>>> 40 * (58258 - 14749 - 5104)
+1536200
+```
+
+--
+- Estimated storage in GB
+``` shell
+>>> (100 * 20) * (58258 - 14749 - 5104) * 14749 / pow(2,30)
+1055
+```
+
+---
+
+# Let re-define our problem! #
+
+--
+* Give me a list of test files need to run to qualify my source files?
+
+---
+
+# What are the new constraints/requirements #
+
+--
+    * **Does not need to be 100% correct.**
+
+--
+    * Does not need  to be very fine grain i.e at test point level.
+
+--
+    * Have to be fast otherwise no-one will ever use it.
+
+--
+    * Support all development and staging environments.
+
+---
+
+# Alternative solutions #
 
 --
 * **Compute the dependency map using module dependency analysis**
 
     * Pros: Do not need to run tests.
 
-    * Cons: Very expensive **~100 CPU hours**.
+    * Cons: Expensive since it take **~100 CPU hours** to collect the module dependency map and the confident level is **Medium**.
 
 --
 
@@ -216,8 +258,13 @@ class: center, middle
 # How can we do it? #
 
 --
+* Solution: **Perform static code analysis using a very fast text searching engine.**
 
-* **Perform static code analysis using a very fast text searching engine.**
+--
+* Pros: Fast and scalable.
+
+--
+* Cons: The confidence level is **Medium**.
 
 ---
 
@@ -225,19 +272,27 @@ class: center, middle
 
 --
 
-* A very fast text search engine that can handle large codebases i.e million lines of code.
+* Build a very fast text search engine that can handle large codebases i.e million lines of code.
 
 --
 
-* Can quickly ingest GB of text data.
+* The text search engine can quickly ingest GB of text data.
 
 ---
 
-# codesearch: A fast and efficient code search engine #
+# [codesearch](https://github.com/hungptit/tools/blob/master/README.md): A fast and efficient code search engine #
 
 --
 
-* A very fast code search engine written using modern C++ and it can process about **3GB of raw text data per second**.
+* Is written using modern C++.
+
+--
+
+* Can process about **3GB of raw text data per second**.
+
+--
+
+* Support a extendend regular expression syntax.
 
 --
 
@@ -245,11 +300,11 @@ class: center, middle
 
 ---
 class: center, middle
-# Simple examples #
+# Demo #
 
 ---
 
-# Simple examples #
+# Typical examples #
 
 --
 * A simple aglimpse command
@@ -283,7 +338,7 @@ prod//test/perl/WorkUnit/Daemon/ScaleMonitor/t/unit/make_trap.t:66:     $monitor
 
 --
 
-* Can support **multiple languages**.
+* Can support **multiple programming languages**.
 
 --
 
