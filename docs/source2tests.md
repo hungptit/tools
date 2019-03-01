@@ -223,16 +223,20 @@ class: center, middle
 # What are the new constraints/requirements #
 
 --
-    * **Does not need to be 100% correct.**
+
+* **Does not need to be 100% correct.**
 
 --
-    * Does not need  to be very fine grain i.e at test point level.
+
+* Does not need  to be very fine grain i.e at test point level.
 
 --
-    * Have to be fast otherwise no-one will ever use it.
+
+* Have to be fast otherwise no-one will ever use it.
 
 --
-    * Support all development and staging environments.
+
+* Support all development and staging environments.
 
 ---
 
@@ -258,12 +262,15 @@ class: center, middle
 # How can we do it? #
 
 --
+
 * Solution: **Perform static code analysis using a very fast text searching engine.**
 
 --
+
 * Pros: Fast and scalable.
 
 --
+
 * Cons: The confidence level is **Medium**.
 
 ---
@@ -376,7 +383,9 @@ time source2tests '(use|require)\s+Document' -p '(_Test[.]pm|[.]t)$' | wc
 
 --
 
-* All binaries are statistical linked and they should work on any MacOS, Linux, and Window Linux Subsystem machine
+* All binaries are statistical linked and they should work on any MacOS, Linux, and Window Linux Subsystem machine. 
+
+* You can find all binaries from this folder **~hdang/bin**
 
 ---
 # FAQs #
