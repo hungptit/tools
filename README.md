@@ -324,10 +324,10 @@ real    0m0.080s
 user    0m0.024s
 sys     0m0.045s
 ```
- 
+
 ### codesearch command ###
 
-codesearch command can be used to search for lines from indexed database. Note that codesearch's indexed database is generated using **builddb** command. 
+codesearch command can be used to search for lines from indexed database. Note that codesearch's indexed database is generated using **builddb** command.
 
 **Generate the indexed data for RocksDB codebase**
 
@@ -446,4 +446,4 @@ Complete.
 
 ### License ###
 
-**codesearch** and **source2tests** are only free for **non-commercial or personal usage**. Please contact me at **hungptit at gmail dot com** for detail information.
+Contact me at **hungptit at gmail dot com** for detail information about the commercial version of codesearch and source2tests engines.
