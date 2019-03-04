@@ -193,7 +193,7 @@ class: center, middle
 --
 * Build the source to test map using code coverage information
 
-    * Pros: Gives the best results.
+    * Pros: This high-order dependency analysis will definitely give us the best results.
 
     * Cons: Very expensive.
 
@@ -213,10 +213,15 @@ class: center, middle
 
 ---
 
-# Let re-define our problem! #
+# Are we stuck? #
 
 --
-* Give me a list of test files need to run to qualify my source files?
+
+* Can we trade accuracy for run-time and storage complexity? 
+
+--
+
+* Shall we use lower order analysis i.e first-order or second-order?
 
 ---
 
@@ -228,7 +233,7 @@ class: center, middle
 
 --
 
-* Does not need  to be very fine grain i.e at test point level.
+* Does not need to be very fine grain at test point level. We will use first-order dependency analysis instead.
 
 --
 
