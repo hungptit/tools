@@ -146,7 +146,7 @@ codesearch '\w*;$' -p '(_Test[.]pm|[.]t)$' | wc -l
 * **Scalability:** Have **a similar results** as running all tests with much lower runtime complexity i.e much a smaller set of tests.
 
 ---
-# What do we currently do int the submit_files script?
+# What do we do in the submit_files script?
 
 --
 ``` shell
@@ -217,7 +217,7 @@ class: center, middle
 
 --
 
-* Can we trade accuracy for run-time and storage complexity? 
+* Can we trade accuracy for run-time and storage complexity?
 
 --
 
@@ -319,6 +319,15 @@ class: center, middle
 # Typical examples #
 
 --
+``` shell
+codesearch 'WorkUnit::Daemon::Trap->new'
+```
+
+---
+
+# Typical examples (cont) #
+
+--
 * A simple aglimpse command
 ``` shell
 aglimpse 'SafeUse\(' | grep -E 'prod.*_Test[.]pm' |  wc -l
@@ -388,7 +397,7 @@ time source2tests '(use|require)\s+Document' -p '(_Test[.]pm|[.]t)$' | wc
 
 --
 
-* All binaries are statistical linked and they should work on any MacOS, Linux, and Window Linux Subsystem machine. 
+* All binaries are statistical linked and they should work on any MacOS, Linux, and Window Linux Subsystem machine.
 
 * You can find all binaries from this folder **~hdang/bin**
 
