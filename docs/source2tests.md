@@ -49,18 +49,18 @@ class: center, middle
 
 --
 
-* We do not know if a line of code works or not until it is executed by our business logics i.e tests.
+* We do not know if a line of code works or not until it is executed by our business logics.
 
 --
 
-* Modyifying our codebase will transform/change its behaviors. An automated unit and integration testsuites **give us confidence** that we have not broken anything significant.
+* Modyifying our codebase will transform/change its behaviors. Automated unit and integration testsuites **give us confidence** that we have not broken anything significant.
 
 --
 
 * Tests can be used for profiling, to help us understand changes in our system's performance, and raise a flag if something degrades significantly.
 
 ---
-# How do we qualify our changes? #
+# How can we qualify our changes? #
 
 --
 
@@ -123,30 +123,9 @@ codesearch '\w*;$' -p '(_Test[.]pm|[.]t)$' | wc -l
 40.96944444444444
 ```
 
----
-
-# What is a source to test map #
-
---
-*It is a map from a source code line to test files or test points that will execute or excersise this source code line.*
 
 ---
-# Why do we need source to test mapping? #
-
---
-
-* **Productivity:** Reduce the qualification time in development and staging.
-
---
-
-* **Reliability:** Boost our confidence that we have not broken anything significant.
-
---
-
-* **Scalability:** Have **a similar results** as running all tests with much lower runtime complexity i.e much a smaller set of tests.
-
----
-# What do we do in the submit_files script?
+# What do we currently do to qualify a task?
 
 --
 ``` shell
@@ -173,6 +152,29 @@ source2tests '(WorkUnit::Daemon|ScaleMonitor)' --perl-tap-tests | wc
 source2tests '(WorkUnit::Daemon|ScaleMonitor)' --perl-legacy-tests | wc
       3       3     151
 ```
+
+---
+
+# What is a source to test map? #
+
+--
+*It is a map from a source code line to test files or test points that will execute or excersise this source code line.*
+
+---
+# Why do we need source to test mapping? #
+
+--
+
+* **Productivity:** Reduce the qualification time in development and staging.
+
+--
+
+* **Reliability:** Boost our confidence that we have not broken anything significant.
+
+--
+
+* **Scalability:** Have **similar results** as running all tests with much lower runtime complexity i.e much a smaller set of tests.
+
 
 ---
 class: center, middle
@@ -391,15 +393,22 @@ time source2tests '(use|require)\s+Document' -p '(_Test[.]pm|[.]t)$' | wc
     263     263   17979
 ```
 
+--
+* Get the coverage report for WorkUnit::Daemon::Trap package
+
+``` shell
+~hdang/bin/code_coverage_report.sh WorkUnit::Daemon::Trap
+```
+
 ---
 
 # How can we use these commands in our development/staging environments? #
 
 --
 
-* All binaries are statistical linked and they should work on any MacOS, Linux, and Window Linux Subsystem machine.
+* All binaries are **statistically linked** and they should work on any MacOS, Linux, and Window Linux Subsystem environment.
 
-* You can find all binaries from this folder **~hdang/bin**
+* You can find all binaries from this folder **~hdang/bin** or **~hdang/public_html/tools**
 
 ---
 # FAQs #
