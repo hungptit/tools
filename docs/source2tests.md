@@ -436,3 +436,21 @@ class: center, middle
 * Mia Morreti
 
 * Zac Bentley
+
+---
+
+# Lessons learned from creating several fastest algorithms #
+
+* Measure, measure, and measure
+
+* The combination of C programming style and C++ template will give us the best code interm of performance.
+
+* Have a deep knowledge about the executed environment.
+
+* Pay attention to Big O.
+
+* Know our data and use the best algorithms if possible.
+
+* We can make our C++ binary portable.
+
+* STL and Boost data structures and algorithms are not fast except **std::vector**, **std::array**, and **std::string**.
