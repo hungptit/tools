@@ -8,51 +8,78 @@ class: center, middle
 * My role is the mixture of a backend engineer and a SRE. We build, maintain, and operate a large distributed job excution system which processes more than 200 million requests per day.
 
 * Write Perl, Bash, and Java code professionally.
-  
-* Write many tools (using C++) to speed up my workflow and development workflow at AthenaHealth.  
 
-* Research about text processing algorithms.
+* Write many tools (using C++) to speed up my workflow and the development workflow at AthenaHealth.
 
----
-
-# Introduction #
-
---
-* Why do we need these [tools](https://github.com/hungptit/tools)?
-
---
-* Comparison with other open source options.
-
---
-* Tools are introduced in the topological sorted order i.e mfind, mlocate, fgrep, codesearch, and source2tests.
+* Research about text searching algorithms.
 
 ---
 
-# Outline for each topic #
+# Agenda #
 
 --
-* Demo
+
+* My [tools](https://github.com/hungptit/tools) are introduced in the topological sorted order i.e mfind, mlocate, fgrep, codesearch, and source2tests.
 
 --
-* Benchmark results
+
+* Benchmark results and analysis for each benchmark.
 
 --
-* The analysis for each benchmark.
+
+* Show some simple examples.
 
 ---
 # mfind #
 
+--
+
 * A fast replacement for [GNU find](https://www.gnu.org/software/findutils/)
+
+--
 
 * More flexible and offer some features that [GNU find](https://www.gnu.org/software/findutils/) does not.
 
 ---
-# Benchmark results #
+
+# Benchmark results - non-git folder #
+
+--
+``` shell
+ATH020224:benchmark hdang$ time find ~/working/3p/include/ | wc
+   16813   16813 1200669
+
+real    0m0.192s
+user    0m0.021s
+sys     0m0.177s
+```
+
+--
+``` shell
+ATH020224:benchmark hdang$ time fd . ~/working/3p/include/ | wc
+   16812   16812 1183824
+
+real    0m0.144s
+user    0m0.168s
+sys     0m0.677s
+```
+
+--
+``` shell
+ATH020224:benchmark hdang$ time ../commands/mfind ~/working/3p/include/ | wc
+   16812   16812 1183824
+
+real    0m0.085s
+user    0m0.018s
+sys     0m0.067s
+```
+
+
 ---
 
 # Benchmark results - Big folder #
 
-``` text
+```shell
 ATH020224:benchmark hdang$ ./mfind -g big_folder
 Celero
 Timer resolution: 0.001000 us
@@ -70,7 +97,7 @@ Complete.
 
 # Benchmark results - Big folder with regex #
 
-``` text
+``` shell
 ATH020224:benchmark hdang$ ./mfind -g big_folder_regex
 Celero
 Timer resolution: 0.001000 us
@@ -85,18 +112,27 @@ Complete.
 ```
 
 ---
-# Why [mfind](https://github.com/hungptit/tools) is significantly faster than both [GNU find](https://www.gnu.org/software/findutils/) and [fd](https://github.com/sharkdp/fd.git) #
+# Why [mfind](https://github.com/hungptit/ioutils) is so fast? #
+
+--
 
 * File traversal algorithms.
 
-* Optimized text search algorithms.
+--
+
+* Text search algorithms.
+
+--
 
 * All core algorithms are templatized so code are generated at compile time.
 
+--
 * Others
-  * Minimum memory copy.
-  * Cache line friendly.
-  * All core algorithms are vectorized using SSE2/AVX2.
+    * Cache line friendly algorithms.
+
+    * The number of system calls is minimal.
+
+    * All core algorithms are vectorized using SSE2/AVX2.
 
 ---
 
@@ -148,37 +184,14 @@ template <typename Container> void dfs(Container &&p) {
 ```
 
 ---
-
-# Benchmark results - non-git folder #
-
-``` text
-ATH020224:benchmark hdang$ time find ~/working/3p/include/ | wc
-   16813   16813 1200669
-
-real    0m0.192s
-user    0m0.021s
-sys     0m0.177s
-ATH020224:benchmark hdang$ time fd . ~/working/3p/include/ | wc
-   16812   16812 1183824
-
-real    0m0.144s
-user    0m0.168s
-sys     0m0.677s
-ATH020224:benchmark hdang$ time ../commands/mfind ~/working/3p/include/ | wc
-   16812   16812 1183824
-
-real    0m0.085s
-user    0m0.018s
-sys     0m0.067s
-```
-
----
 # mlocate #
 
 --
+
 * A compartible replacement for [GNU locate](https://www.gnu.org/software/findutils/).
 
 --
+
 * Can be 10x faster than [GNU locate](https://www.gnu.org/software/findutils/).
 
 ---
@@ -186,7 +199,7 @@ sys     0m0.067s
 # Benchmark results using boost source code #
 
 --
-``` text
+``` shell
 ATH020224:benchmark hdang$ ./locate_benchmark
 Celero
 Timer resolution: 0.001000 us
@@ -200,36 +213,55 @@ Complete.
 
 ---
 
-# Why [mlocate](https://github.com/hungptit/tools) is 10x faster than [GNU locate](https://www.gnu.org/software/findutils/)? #
+# Why [mlocate](https://github.com/hungptit/tools) is so fast? #
+
+--
 
 * [File reading algorithms](https://lemire.me/blog/2012/06/26/which-is-fastest-read-fread-ifstream-or-mmap/).
 
+--
+
 * [Text search algorithm](https://branchfree.org/2019/02/28/paper-hyperscan-a-fast-multi-pattern-regex-matcher-for-modern-cpus/).
+
+--
 
 * Optimized data structure for storing paths.
 
+--
+
 * All core algorithms are templatized so code are generated at compile time.
 
+--
+
 * Others
-  * Minimum memory copy.
-  * Cache line friendly.
+
+  * Minimum memory copy/allocation operations.
+
+  * Cache line friendly algorithms and data structures.
+
   * All core algorithms are vectorized using SSE2/AVX2.
 
 ---
 
 # fastgrep #
 
+--
+
 * fastgrep is created to address a real problem i.e log diving in production log with TB of text data.
 
-* Build as a library so I can use it in other projects.
+--
 
-* Need a portable tool which can be used in any Linux system.
+* Build as a library so it can be reused in other projects.
+
+--
+
+* Need a portable text searching tool that works in any Linux system.
 
 ---
 
-# Benchmark results - Single file #
+# Benchmark results - A single file #
 
-``` text
+``` shell
 ATH020224:benchmark hdang$ ./all_tests -g mark_twain
 Celero
 Timer resolution: 0.001000 us
@@ -247,7 +279,7 @@ Complete.
 ---
 # Benchmark results - Multiple files #
 
-``` text
+``` shell
 ATH020224:benchmark hdang$ ./all_tests -g boost_source
 Celero
 Timer resolution: 0.001000 us
@@ -276,34 +308,48 @@ Complete.
 ---
 # Why fastgrep can be faster than GNU grep? #
 
+--
+
 * [File reading algorithms](https://lemire.me/blog/2012/06/26/which-is-fastest-read-fread-ifstream-or-mmap/).
+
+--
 
 * [Text search algorithm](https://branchfree.org/2019/02/28/paper-hyperscan-a-fast-multi-pattern-regex-matcher-for-modern-cpus/).
 
+--
+
 * [File traversal algorithms](https://github.com/hungptit/ioutils)
 
-* All core algorithms are templatized so code are generated at compile time.
+--
 
 * Others
-  * Minimum memory copy.
-  * Cache line friendly.
+
+    * All core algorithms are templatized so code are generated at compile time.
+
+    * Minimum memory copy.
+
+    * Cache line friendly.
 
 ---
 # codesearch #
 
-* Why?
+--
 
-  * grep like tools is only good for a medium number of files. If you have a codebase with millions lines of code then grep like tools do not work well.
+* grep like tools are only good for a small or medium number of files. If you have a codebase with million lines of code then these tools do not work well.
 
-  * Allow users to quickly search for desired text pattern.
+--
 
-  * Will significantly improve your development workflow especially you have to work with a lot of files everyday.
+* Allow users to quickly search for desired text pattern.
+
+--
+
+* Will significantly improve your development workflow especially you have to work with a lot of files everyday.
 
 ---
 
-# Demo #
+# Examples #
 
-``` gettext-catalog
+``` shell
 ATH020224:3p hdang$ codesearch zstd.*round-trip -p 'tests.*(cpp|c)$'
 src//zstd/tests/fuzz/block_round_trip.c:11: * This fuzz target performs a zstd round-trip test (compress & decompress),
 src//zstd/tests/fuzz/simple_round_trip.c:11: * This fuzz target performs a zstd round-trip test (compress & decompress),
@@ -316,71 +362,88 @@ src//zstd/tests/roundTripCrash.c:13:  performs a zstd round-trip test (compressi
 # Can we use it? #
 
 --
+
 * codesearch is free. You can download *Nix versions of codesearch [here](https://github.com/hungptit/tools).
 
 --
-* There is a commercial version of codesearch/source2tests:
+
+* There is a commercial version of codesearch/source2tests. This version
 
     * Supports REST interface.
-    
+
     * Is faster than the free version.
-    
+
     * Can be customized based on user requirements or specifications.
-   
+
 ---
 # source2tests #
 
 --
+
 * It is a impossible task for large codebases i.e million lines of code because of runtime and storage complexities.
 
 --
+
 * There is not any available solution yet.
 
 ---
-# Why? #
+# What are possible solutions? #
 
----
-# What is the standard way to tackle source to test map challenge? #
+--
 
-* Use code coverage information i.e high-order analysis
-  * Runtime complexity: O(NM), where N is the number of source lines and M is the number of tests.
-  * Space complexity: O(NM)
-  * Confidence score: High
+* **Use code coverage information i.e high-order analysis**
+
+    - Runtime complexity: O(NM), where N is the number of source lines and M is the number of tests.
+    - Space complexity: O(NM)
+    - Confidence score: High
+
+--
+
+* **Use static text analysys i.e low-order analysis**
+
+    - Runtime complexity: O(N)
+    - Space complexity: O(N)
+    - Confidence score: Medium
   
-* Use static text analysys i.e low-order analysis
-  * Runtime complexity: O(N)
-  * Space complexity: O(N)
-  * Confidence score: Medium
-  
-* Use folder map i.e first or second order analysis.
-  * Runtime complexity: O(N)
-  * Space complexity: O(1)
-  * Confidence level: Low
+--
+
+* **Use folder map i.e first or second order analysis.**
+
+    - Runtime complexity: O(N)
+    - Space complexity: O(1)
+    - Confidence level: Low
 
 ---
 
 # What does source2tests do? #
 
-* We use the static text analysis using the very fast text search engine which can process 3GB of text data per second per thread.
+--
 
-* The current version only support the first order analysis.
+* Use the static text analysis to figure out tests need to run or execute.
+
+--
+
+* The current version only supports the first order analysis.
 
 ---
 
 # Features #
 
+--
+
 * Work with any programming language.
 
-* Work well for large codebase with million lines of code.
+--
 
-* Provide a command line interface.
+* Has a basic command line interface.
 
 ---
-class: center, middle
 
-# Examples - Find all zstd tests #
+# Examples - Find all zstd's tests #
 
-``` text
+--
+
+``` shell
 ATH020224:3p hdang$ source2tests zstd -p 'tests.*(cpp|c)$'
 src//zstd/tests/checkTag.c
 src//zstd/tests/decodecorpus.c
@@ -407,16 +470,30 @@ src//zstd/tests/zstreamtest.c
 
 # C++ performance tips #
 
+--
+
 * [Measure, measure, and measure.](https://www.youtube.com/watch?v=Qq_WaiwzOtI)
+
+--
 
 * Minimize memory copy/write/allocation operations.
 
+--
+
 * Try to vectorize your code if possible.
 
-* Use boost libraries with care i.e perforamnce is not the first constraint of any boost libraries for example boost hash function is [really slow](https://github.com/hungptit/clhash/blob/master/benchmark/string_short.svg) for generic usage.
+--
+
+* Use boost libraries with care for example boost hash function is [really slow](https://github.com/hungptit/clhash/blob/master/benchmark/string_short.svg) for generic usage.
+
+--
 
 * Do not use C++ iostream for serious file I/O applications.
 
+--
+
 * Use C pointer if you want to optimize for performance and *you do know what you are doing*.
+
+--
 
 * [Need to use STL with care.](https://www.youtube.com/watch?v=eICYHA-eyXM)
