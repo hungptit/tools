@@ -1,17 +1,29 @@
 class: center, middle
-# Impossible Engineering Problems Often Aren't: How can I solve source to test mapping challenge for large codebases
+# Impossible Engineering Problems Often Aren't: How can I solve the source to test mapping challenge for large codebases
+
+<!-- --- -->
+
+<!-- # What do I do for the last two years? # -->
+
+<!-- * My role is the mixture of a backend engineer and a SRE. We build, maintain, and operate a large distributed job excution system which processes more than 200 million requests per day. -->
+
+<!-- * Write Perl, Bash, and Java code professionally. -->
+
+<!-- * Write many tools (using C++) to speed up my workflow and the development workflow at AthenaHealth. -->
+
+<!-- * Research about text searching algorithms. -->
 
 ---
 
-# What do I do for the last two years? #
+# Why? #
 
-* My role is the mixture of a backend engineer and a SRE. We build, maintain, and operate a large distributed job excution system which processes more than 200 million requests per day.
+--
 
-* Write Perl, Bash, and Java code professionally.
+* Trouble shooting and debugging
 
-* Write many tools (using C++) to speed up my workflow and the development workflow at AthenaHealth.
+--
 
-* Research about text searching algorithms.
+* Large refactoring tasks.
 
 ---
 
@@ -19,15 +31,15 @@ class: center, middle
 
 --
 
-* My [tools](https://github.com/hungptit/tools) are introduced in the topological sorted order i.e mfind, mlocate, fgrep, codesearch, and source2tests.
+* My [tools](https://github.com/hungptit/tools) are introduced in the topologically sorted order i.e mfind, mlocate, fgrep, codesearch, and source2tests.
 
 --
 
-* Benchmark results and analysis for each benchmark.
+* Show benchmark results and analysis for each tool.
 
 --
 
-* Show some simple examples.
+* Show some practical examples.
 
 ---
 # mfind #
@@ -73,7 +85,6 @@ real    0m0.085s
 user    0m0.018s
 sys     0m0.067s
 ```
-
 
 ---
 
@@ -128,6 +139,7 @@ Complete.
 
 --
 * Others
+
     * Cache line friendly algorithms.
 
     * The number of system calls is minimal.
@@ -196,6 +208,70 @@ template <typename Container> void dfs(Container &&p) {
 
 ---
 
+# Build file information database for my MacBook #
+
+--
+
+``` shell
+ATH020224:/ hdang$ /usr/bin/time -lp gupdatedb --localpaths=/usr/ --localpaths=/Users/ --output="/Users/hdang/.locatedb"
+real        35.37
+user        10.82
+sys         23.45
+```
+
+--
+
+``` shell
+ATH020224:/ hdang$ /usr/bin/time -lp mupdatedb /usr/ /Users/ -d="/Users/hdang/.database"
+real        56.82
+user         2.99
+sys         38.84
+```
+
+---
+
+# GNU locate vs mlocate #
+
+--
+
+``` shell
+ATH020224:/ hdang$ time glocate -d ~/.locatedb --regex 'fmt.*string.h'
+/Users/hdang/working/3p/include/fmt/string.h
+/Users/hdang/working/3p/src/seastar/fmt/fmt/string.h
+/Users/hdang/working/backup/projects/projects/code_coverage/include/fmt/string.h
+/Users/hdang/working/backup/projects/projects/graph/3p/fmt/fmt/string.h
+/Users/hdang/working/backup/projects/projects/graph/include/fmt/string.h
+/Users/hdang/working/backup/projects/projects/others/coverage/3p/fmt/fmt/string.h
+/Users/hdang/working/backup/projects/projects/tools/fmt/fmt/string.h
+
+real    0m2.355s
+user    0m2.287s
+sys     0m0.039s
+```
+
+--
+
+``` shell
+ATH020224:/ hdang$ time mlocate -d ~/.database 'fmt.*string.h'
+/Users/hdang/working/backup/projects/projects/code_coverage/include/fmt/string.h
+/Users/hdang/working/backup/projects/projects/others/coverage/3p/fmt/fmt/string.h
+/Users/hdang/working/backup/projects/projects/graph/include/fmt/string.h
+/Users/hdang/working/backup/projects/projects/graph/3p/fmt/fmt/string.h
+/Users/hdang/working/backup/projects/projects/tools/fmt/fmt/string.h
+/Users/hdang/working/3p/src/seastar/fmt/fmt/string.h
+/Users/hdang/working/3p/include/fmt/string.h
+
+real    0m0.217s
+user    0m0.156s
+sys     0m0.052s
+```
+
+???
+* Got a lot of heated argument on the phone because some very senior software engineers do not believe it.
+* This command might be several time faster than sblocate.
+
+---
+
 # Benchmark results using boost source code #
 
 --
@@ -225,7 +301,7 @@ Complete.
 
 --
 
-* Optimized data structure for storing paths.
+* Optimized data structures for storing paths.
 
 --
 
@@ -240,6 +316,9 @@ Complete.
   * Cache line friendly algorithms and data structures.
 
   * All core algorithms are vectorized using SSE2/AVX2.
+
+???
+
 
 ---
 
@@ -404,7 +483,7 @@ src//zstd/tests/roundTripCrash.c:13:  performs a zstd round-trip test (compressi
     - Runtime complexity: O(N)
     - Space complexity: O(N)
     - Confidence score: Medium
-  
+
 --
 
 * **Use folder map i.e first or second order analysis.**
@@ -468,6 +547,24 @@ src//zstd/tests/zstreamtest.c
 
 ---
 
+# Run all Perl tests using special constraints #
+
+--
+
+* Run all Perl tests that
+
+  * Use my module
+
+  * Do not belong to me
+
+--
+
+``` shell
+prove -j30 $(source2tests 'use WorkUnit' -p '[.](t)$' | fgrep --stdin --invert-match WorkUnit)
+```
+
+---
+
 # C++ performance tips #
 
 --
@@ -497,3 +594,11 @@ src//zstd/tests/zstreamtest.c
 --
 
 * [Need to use STL with care.](https://www.youtube.com/watch?v=eICYHA-eyXM)
+
+---
+
+# Acknowledgment #
+
+* Tue Ly
+
+* Zac Bently (@zbently)
