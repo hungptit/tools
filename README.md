@@ -4,13 +4,13 @@
 
 This repository contains a collections of productivity commands that can significantly improve the development workflow for large scale software projects.
 
-* mupdatedb: Build the file information database for mlocate.
+* [mupdatedb](https://github.com/hungptit/ioutils/blob/master/commands/mupdatedb.cpp): Build the file information database for mlocate.
 
-* mlocate: Locate files and folders using the file information database created by mupdatedb.
+* [mlocate](https://github.com/hungptit/ioutils/blob/master/commands/mlocate.cpp): Locate files and folders using the file information database created by mupdatedb.
 
-* mfind: Find files from folders.
+* [mfind](https://github.com/hungptit/ioutils/blob/master/commands/mfind.cpp): Find files from folders.
 
-* fgrep: Search for matched lines from given files or folders.
+* [fgrep](https://github.com/hungptit/fastgrep): Search for matched lines from given files or folders.
 
 * builddb: Generate the indexed file content database which will be used by codesearch and source2tests commands.
 
@@ -59,9 +59,9 @@ source setup.sh Linux/x86_64/4.4.0-17134-Microsoft/avx2/
 
 ## Tutorial ##
 
-Below are some practical examples for mlocate, mfind, fgrep, codesearch, and source2tests commands.
+Below are some practical examples for [mlocate](https://github.com/hungptit/ioutils/blob/master/commands/mlocate.cpp), [mfind](https://github.com/hungptit/ioutils/blob/master/commands/mfind.cpp), fgrep, codesearch, and source2tests commands.
 
-### mupdatedb ###
+### [mupdatedb](https://github.com/hungptit/ioutils/blob/master/commands/mupdatedb.cpp) ###
 
 This command will build the file information database for the **mlocate** command. **mupdatedb** takes search paths as input arguments and save all file information in specified database path. Use **-h** or **--help** options to get detail information about supported input options.
 
@@ -82,7 +82,7 @@ In the example below we will create the file information database and save it to
 mupdatedb src/ -d .database
 ```
 
-### mlocate ###
+### [mlocate](https://github.com/hungptit/ioutils/blob/master/commands/mlocate.cpp) ###
 
 Assume a file information database has been created then we can use it to quickly find/locate files using different options.
 

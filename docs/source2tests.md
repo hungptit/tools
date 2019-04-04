@@ -408,13 +408,13 @@ time source2tests '(use|require)\s+Document' -p '(_Test[.]pm|[.]t)$' | wc
 
 * All binaries are **statistically linked** and they should work on any MacOS, Linux, and Window Linux Subsystem environment.
 
-* You can find all binaries from this folder **~hdang/bin** or **~hdang/public_html/tools**
+* You can find all binaries from this folder **~hdang/public_html/tools**
 
 ---
 # FAQs #
 
 * How can I use your tools?
-All binaries can be found here **~hdang/bin** and they should work on any development servers.
+All binaries can be found [here](https://github.com/hungptit/tools) and they should work on any development servers.
 
 * Where can I find binaries for MacOS?
 Binaries for MacOS can be downloaded from this [link](https://github.com/hungptit/tools/tree/master/Darwin/x86_64).
@@ -423,7 +423,7 @@ Binaries for MacOS can be downloaded from this [link](https://github.com/hungpti
 Binaries for Window Linux Subsystem can be downloaded from this [link](https://github.com/hungptit/tools/tree/master/Linux/x86_64/4.4.0-17134-Microsoft).
 
 * Do you have any document for your tools?
-*The confluence page will be available soon*. In the mean time, you can get basic information about my tool [here](https://github.com/hungptit/tools/blob/master/README.md)  or ping me over slack for more information.
+You can get basic information about my tool [here](https://github.com/hungptit/tools/blob/master/README.md)  or ping me over slack for more information.
 
 ---
 class: center, middle
@@ -436,3 +436,21 @@ class: center, middle
 * Mia Morreti
 
 * Zac Bentley
+
+---
+
+# Lessons learned from creating several fastest algorithms #
+
+* Measure, measure, and measure
+
+* The combination of C programming style and C++ template will give us the best code interm of performance.
+
+* Have a deep knowledge about the executed environment.
+
+* Pay attention to Big O.
+
+* Know our data and use the best algorithms if possible.
+
+* We can make our C++ binary portable.
+
+* STL and Boost data structures and algorithms are not fast except **std::vector**, **std::array**, and **std::string**.
