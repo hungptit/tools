@@ -106,6 +106,8 @@ buffer size: 19087485
 
 **Find files using a simple search pattern**
 
+*Hint: You can skip the file information database by setting MLOCATE_DB environment variable.*
+
 ``` shell
 hdang@macos ~/w/t/D/x/1/avx2> time ./mlocate 'CompressionTest'
 /Users/hdang/working/worker-3p/src/hazelcast/hazelcast/src/test/java/com/hazelcast/internal/serialization/impl/CompressionTest.java
