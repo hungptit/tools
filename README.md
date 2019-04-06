@@ -449,3 +449,24 @@ Complete.
 ### License ###
 
 Contact me at **hungptit at gmail dot com** for detail information about the commercial version of codesearch and source2tests engines.
+
+### How can I use mlocate with Emacs? ###
+
+#### Ivy mode ####
+
+Below is my little hack in counsel.el to replace GNU locate by mlocate. 
+
+``` emacs-lisp
+(defun counsel-locate-cmd-default (input)
+  "Return a shell command based on INPUT."
+  (counsel-require-program "mlocate")
+  (format "mlocate --prefix $P4_HOME/ -i '%s'"
+          (counsel-unquote-regex-parens
+           (ivy--regex input))))
+
+(defun counsel-locate-cmd-noregex (input)
+  "Return a shell command based on INPUT."
+  (counsel-require-program "mlocate")
+  (format "mlocate --prefix $P4_HOME/ -i '%s'" input))
+```
+
