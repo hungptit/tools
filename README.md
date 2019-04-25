@@ -4,11 +4,11 @@
 
 This repository contains a collections of productivity commands that can significantly improve the development workflow for large scale software projects.
 
-* [mupdatedb](https://github.com/hungptit/ioutils/blob/master/commands/mupdatedb.cpp): Build the file information database for mlocate.
+* [fast-updatedb](https://github.com/hungptit/ioutils/blob/master/commands/fast-updatedb.cpp): Build the file information database for fast-locate.
 
-* [mlocate](https://github.com/hungptit/ioutils/blob/master/commands/mlocate.cpp): Locate files and folders using the file information database created by mupdatedb.
+* [fast-locate](https://github.com/hungptit/ioutils/blob/master/commands/fast-locate.cpp): Locate files and folders using the file information database created by fast-updatedb.
 
-* [mfind](https://github.com/hungptit/ioutils/blob/master/commands/mfind.cpp): Find files from folders.
+* [fast-find](https://github.com/hungptit/ioutils/blob/master/commands/fast-find.cpp): Find files from folders.
 
 * [fgrep](https://github.com/hungptit/fastgrep): Search for matched lines from given files or folders.
 
@@ -24,11 +24,11 @@ All binaries are portable and we should be able to execute/run them on any Linux
 
 Our performance benchmark results show that:
 
-* **mlocate** is 10x or more faster than **GNU locate**.
+* **fast-locate** is 10x or more faster than **GNU locate**.
 
 * **fgrep** is the fastest single thread text searching command.
 
-* **mfind** is 1.5-2x faster than GNU find command.
+* **fast-find** is 1.5-2x faster than GNU find command.
 
 * **codesearch** is faster than aglimpse and is as fast as Google codesearch for code searching purpose. The commercial version of codesearch is significantly faster than both **Google codesearch** and **aglimpse**.
 
@@ -59,16 +59,16 @@ source setup.sh Linux/x86_64/4.4.0-17134-Microsoft/avx2/
 
 ## Tutorial ##
 
-Below are some practical examples for [mlocate](https://github.com/hungptit/ioutils/blob/master/commands/mlocate.cpp), [mfind](https://github.com/hungptit/ioutils/blob/master/commands/mfind.cpp), fgrep, codesearch, and source2tests commands.
+Below are some practical examples for [fast-locate](https://github.com/hungptit/ioutils/blob/master/commands/fast-locate.cpp), [fast-find](https://github.com/hungptit/ioutils/blob/master/commands/fast-find.cpp), fgrep, codesearch, and source2tests commands.
 
-### [mupdatedb](https://github.com/hungptit/ioutils/blob/master/commands/mupdatedb.cpp) ###
+### [fast-updatedb](https://github.com/hungptit/ioutils/blob/master/commands/fast-updatedb.cpp) ###
 
-This command will build the file information database for the **mlocate** command. **mupdatedb** takes search paths as input arguments and save all file information in specified database path. Use **-h** or **--help** options to get detail information about supported input options.
+This command will build the file information database for the **fast-locate** command. **fast-updatedb** takes search paths as input arguments and save all file information in specified database path. Use **-h** or **--help** options to get detail information about supported input options.
 
 ``` shell
-mupdatedb -?
+fast-updatedb -?
 usage:
-  mupdatedb [<paths> ... ] options
+  fast-updatedb [<paths> ... ] options
 
 where options are:
   -?, -h, --help               display usage information
@@ -79,19 +79,19 @@ where options are:
 In the example below we will create the file information database and save it to **.database** file. This command can display verbose information if **--verbose** flag is given.
 
 ``` shell
-mupdatedb src/ -d .database
+fast-updatedb src/ -d .database
 ```
 
-### [mlocate](https://github.com/hungptit/ioutils/blob/master/commands/mlocate.cpp) ###
+### [fast-locate](https://github.com/hungptit/ioutils/blob/master/commands/fast-locate.cpp) ###
 
 Assume a file information database has been created then we can use it to quickly find/locate files using different options.
 
 **Build file information database**
 
-This step is required before using the **mlocate** command
+This step is required before using the **fast-locate** command
 
 ``` shell
-hdang@macos ~/w/t/D/x/1/avx2> ./mupdatedb $HOME/working/ -v
+hdang@macos ~/w/t/D/x/1/avx2> ./fast-updatedb $HOME/working/ -v
 {
     "Input arguments": {
         "paths": [
@@ -106,10 +106,10 @@ buffer size: 19087485
 
 **Find files using a simple search pattern**
 
-*Hint: You can skip the file information database by setting MLOCATE_DB environment variable.*
+*Hint: You can skip the file information database by setting FAST-LOCATE_DB environment variable.*
 
 ``` shell
-hdang@macos ~/w/t/D/x/1/avx2> time ./mlocate 'CompressionTest'
+hdang@macos ~/w/t/D/x/1/avx2> time ./fast-locate 'CompressionTest'
 /Users/hdang/working/worker-3p/src/hazelcast/hazelcast/src/test/java/com/hazelcast/internal/serialization/impl/CompressionTest.java
 /Users/hdang/working/worker-3p/src/vert.x/src/test/java/io/vertx/test/core/Http2CompressionTest.java
 /Users/hdang/working/worker-3p/src/vert.x/src/test/java/io/vertx/test/core/HttpCompressionTest.java
@@ -120,7 +120,7 @@ hdang@macos ~/w/t/D/x/1/avx2> time ./mlocate 'CompressionTest'
 **Find files using a regular expression pattern**
 
 ``` shell
-hdang@macos ~/w/t/D/x/1/avx2> time ./mlocate 'rocksdb.*Compression'
+hdang@macos ~/w/t/D/x/1/avx2> time ./fast-locate 'rocksdb.*Compression'
 /Users/hdang/working/backup/projects/projects/others/coverage/3p/rocksdb/java/src/main/java/org/rocksdb/CompressionOptions.java
 /Users/hdang/working/backup/projects/projects/others/coverage/3p/rocksdb/java/src/main/java/org/rocksdb/CompressionType.java
 /Users/hdang/working/backup/projects/projects/others/coverage/3p/rocksdb/java/src/test/java/org/rocksdb/CompressionTypesTest.java
@@ -135,7 +135,7 @@ hdang@macos ~/w/t/D/x/1/avx2> time ./mlocate 'rocksdb.*Compression'
 **Find files with .cpp and .h extensions**
 
 ``` shell
-hdang@macos ~/w/t/D/x/1/avx2> time ./mlocate 'Compression.*[cpp|hpp]$'
+hdang@macos ~/w/t/D/x/1/avx2> time ./fast-locate 'Compression.*[cpp|hpp]$'
 /Users/hdang/working/3p/src/zapcc/lib/Support/Compression.cpp
 /Users/hdang/working/3p/src/zapcc/unittests/Support/CompressionTest.cpp
 /Users/hdang/working/3p/src/zapcc/include/llvm/Support/Compression.h
@@ -143,19 +143,19 @@ hdang@macos ~/w/t/D/x/1/avx2> time ./mlocate 'Compression.*[cpp|hpp]$'
         0.08 real         0.04 user         0.01 sys
 ```
 
-### mfind ###
-**mfind** is an alternative solution to [GNU find](https://www.gnu.org/software/findutils/manual/html_mono/find.html) command with a similar syntax. Use **mfind --help** to get detail information about input arguments.
+### fast-find ###
+**fast-find** is an alternative solution to [GNU find](https://www.gnu.org/software/findutils/manual/html_mono/find.html) command with a similar syntax. Use **fast-find --help** to get detail information about input arguments.
 
 **Find files in a given folder**
 
 ``` shell
-hdang@macos ~/w/t/D/x/1/avx2> ./mfind ./
+hdang@macos ~/w/t/D/x/1/avx2> ./fast-find ./
 ./source2tests
-./mlocate
+./fast-locate
 ./codesearch
-./mupdatedb
+./fast-updatedb
 ./.database
-./mfind
+./fast-find
 ./mwc
 ./fgrep
 ```
@@ -163,7 +163,7 @@ hdang@macos ~/w/t/D/x/1/avx2> ./mfind ./
 **Find files using regular expression**
 
 ``` shell
-hdang@macos ~/w/t/D/x/1/avx2> time mfind ~/working/3p/src/boost/ -e 'coroutine(\w_)*.hpp$'
+hdang@macos ~/w/t/D/x/1/avx2> time fast-find ~/working/3p/src/boost/ -e 'coroutine(\w_)*.hpp$'
 /Users/hdang/working/3p/src/boost/libs/asio/include/boost/asio/coroutine.hpp
 /Users/hdang/working/3p/src/boost/libs/coroutine2/include/boost/coroutine2/coroutine.hpp
 /Users/hdang/working/3p/src/boost/libs/coroutine2/include/boost/coroutine2/detail/pull_coroutine.hpp
@@ -178,7 +178,7 @@ hdang@macos ~/w/t/D/x/1/avx2> time mfind ~/working/3p/src/boost/ -e 'coroutine(\
 **Ignore cases**
 
 ``` shell
-hdang@macos ~/w/t/D/x/1/avx2> time mfind ~/working/3p/src/boost/ -e 'Coroutine(\w_)*.hpp$' -i
+hdang@macos ~/w/t/D/x/1/avx2> time fast-find ~/working/3p/src/boost/ -e 'Coroutine(\w_)*.hpp$' -i
 /Users/hdang/working/3p/src/boost/libs/asio/include/boost/asio/coroutine.hpp
 /Users/hdang/working/3p/src/boost/libs/coroutine2/include/boost/coroutine2/coroutine.hpp
 /Users/hdang/working/3p/src/boost/libs/coroutine2/include/boost/coroutine2/detail/pull_coroutine.hpp
@@ -193,13 +193,13 @@ hdang@macos ~/w/t/D/x/1/avx2> time mfind ~/working/3p/src/boost/ -e 'Coroutine(\
 **Using inverse match feature i.e find files that do not match specified pattern**
 
 ``` shell
-hdang@macos ~/w/t/D/x/1/avx2> ./mfind --inverse-match find ./
+hdang@macos ~/w/t/D/x/1/avx2> ./fast-find --inverse-match find ./
 ./source2tests
-./mlocate
+./fast-locate
 ./codesearch
-./mupdatedb
+./fast-updatedb
 ./.database
-./mfind
+./fast-find
 ./mwc
 ./fgrep
 ```
@@ -401,10 +401,10 @@ mark_twain      | fgrep_default   |               0 |               5 |         
 Complete.
 ```
 
-#### mfind ####
+#### fast-find ####
 
 ``` shell
-./mfind -g boost
+./fast-find -g boost
 Celero
 Timer resolution: 0.001000 us
 -----------------------------------------------------------------------------------------------------------------------------------------------
@@ -412,12 +412,12 @@ Timer resolution: 0.001000 us
 -----------------------------------------------------------------------------------------------------------------------------------------------
 boost           | gnu_find        |               0 |              10 |               1 |         1.00000 |   1013653.00000 |            0.99 |
 boost           | fd              |               0 |              10 |               1 |         1.02080 |   1034736.00000 |            0.97 |
-boost           | mfind_to_consol |               0 |              10 |               1 |         0.45755 |    463798.00000 |            2.16 |
+boost           | fast-find_to_consol |               0 |              10 |               1 |         0.45755 |    463798.00000 |            2.16 |
 Complete.
 ```
 
 ``` shell
-./mfind -g boost_regex
+./fast-find -g boost_regex
 Celero
 Timer resolution: 0.001000 us
 -----------------------------------------------------------------------------------------------------------------------------------------------
@@ -425,13 +425,13 @@ Timer resolution: 0.001000 us
 -----------------------------------------------------------------------------------------------------------------------------------------------
 boost_regex     | gnu_find        |               0 |              10 |               1 |         1.00000 |   1001279.00000 |            1.00 |
 boost_regex     | fd              |               0 |              10 |               1 |         0.91047 |    911631.00000 |            1.10 |
-boost_regex     | mfind_to_consol |               0 |              10 |               1 |         0.46879 |    469385.00000 |            2.13 |
+boost_regex     | fast-find_to_consol |               0 |              10 |               1 |         0.46879 |    469385.00000 |            2.13 |
 Complete.
 ```
 
-#### mlocate ####
+#### fast-locate ####
 
-**mlocate** is consistently 10x faster than **GNU locate** in our tests. Below are benchmark results collected on MacOS
+**fast-locate** is consistently 10x faster than **GNU locate** in our tests. Below are benchmark results collected on MacOS
 
 ``` shell
 Celero
@@ -440,7 +440,7 @@ Timer resolution: 0.001000 us
      Group      |   Experiment    |   Prob. Space   |     Samples     |   Iterations    |    Baseline     |  us/Iteration   | Iterations/sec  |
 -----------------------------------------------------------------------------------------------------------------------------------------------
 regex           | gnu_locate      |               0 |              10 |               1 |         1.00000 |    352569.00000 |            2.84 |
-regex           | mlocate         |               0 |              10 |               1 |         0.06956 |     24524.00000 |           40.78 |
+regex           | fast-locate         |               0 |              10 |               1 |         0.06956 |     24524.00000 |           40.78 |
 Complete.
 ```
 
@@ -450,23 +450,23 @@ Complete.
 
 Contact me at **hungptit at gmail dot com** for detail information about the commercial version of codesearch and source2tests engines.
 
-### How can I use mlocate with Emacs? ###
+### How can I use fast-locate with Emacs? ###
 
 #### Ivy mode ####
 
-Below is my little hack in counsel.el to replace GNU locate by mlocate. 
+Below is my little hack in counsel.el to replace GNU locate by fast-locate. 
 
 ``` emacs-lisp
 (defun counsel-locate-cmd-default (input)
   "Return a shell command based on INPUT."
-  (counsel-require-program "mlocate")
-  (format "mlocate --prefix $P4_HOME/ -i '%s'"
+  (counsel-require-program "fast-locate")
+  (format "fast-locate --prefix $P4_HOME/ -i '%s'"
           (counsel-unquote-regex-parens
            (ivy--regex input))))
 
 (defun counsel-locate-cmd-noregex (input)
   "Return a shell command based on INPUT."
-  (counsel-require-program "mlocate")
-  (format "mlocate --prefix $P4_HOME/ -i '%s'" input))
+  (counsel-require-program "fast-locate")
+  (format "fast-locate --prefix $P4_HOME/ -i '%s'" input))
 ```
 

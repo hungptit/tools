@@ -22,7 +22,7 @@ install_binaries() {
     make -j5 install > /dev/null
     popd
 
-    # Install mlocate, mfind, mupdatedb, and mwc
+    # Install fast-locate, fast-find, fast-updatedb, and fast-wc
     pushd "$working_dir/ioutils/commands"
     cmake ./ "$cmake_options" > /dev/null
     make clean > /dev/null 
@@ -46,7 +46,7 @@ copy_binaries() {
     src_dir="$HOME/bin"
     dest_dir="$platform/$architect/$release/$build_mode"
     mkdir -p $dest_dir
-    binaries="mwc fgrep mlocate mupdatedb mfind builddb codesearch source2tests "
+    binaries="fast-wc fgrep fast-locate fast-updatedb fast-find builddb codesearch source2tests "
     for cmd in $binaries; do
         echo "Copying $cmd ..."
         cp -f "$src_dir/$cmd" "$dest_dir/$cmd"

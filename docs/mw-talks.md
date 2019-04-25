@@ -31,7 +31,7 @@ class: center, middle
 
 --
 
-* My [tools](https://github.com/hungptit/tools) are introduced in the topologically sorted order i.e mfind, mlocate, fgrep, codesearch, and source2tests.
+* My [tools](https://github.com/hungptit/tools) are introduced in the topologically sorted order i.e mfind, fast-locate, fgrep, codesearch, and source2tests.
 
 --
 
@@ -42,7 +42,7 @@ class: center, middle
 * Show some practical examples.
 
 ---
-# mfind #
+# fast-find #
 
 --
 
@@ -78,7 +78,7 @@ sys     0m0.677s
 
 --
 ``` shell
-ATH020224:benchmark hdang$ time ../commands/mfind ~/working/3p/include/ | wc
+ATH020224:benchmark hdang$ time ../commands/fast-find ~/working/3p/include/ | wc
    16812   16812 1183824
 
 real    0m0.085s
@@ -91,7 +91,7 @@ sys     0m0.067s
 # Benchmark results - Big folder #
 
 ```shell
-ATH020224:benchmark hdang$ ./mfind -g big_folder
+ATH020224:benchmark hdang$ ./fast-find -g big_folder
 Celero
 Timer resolution: 0.001000 us
 -----------------------------------------------------------------------------------------------------------------------------------------------
@@ -99,8 +99,8 @@ Timer resolution: 0.001000 us
 -----------------------------------------------------------------------------------------------------------------------------------------------
 big_folder      | gnu_find        |               0 |              20 |               1 |         1.00000 |    475287.00000 |            2.10 |
 big_folder      | fd              |               0 |              20 |               1 |         1.09422 |    520067.00000 |            1.92 |
-big_folder      | mfind_default   |               0 |              20 |               1 |         0.53738 |    255410.00000 |            3.92 |
-big_folder      | mfind_dfs       |               0 |              20 |               1 |         0.52558 |    249803.00000 |            4.00 |
+big_folder      | fast-find_default   |               0 |              20 |               1 |         0.53738 |    255410.00000 |            3.92 |
+big_folder      | fast-find_dfs       |               0 |              20 |               1 |         0.52558 |    249803.00000 |            4.00 |
 Complete.
 ```
 
@@ -109,7 +109,7 @@ Complete.
 # Benchmark results - Big folder with regex #
 
 ``` shell
-ATH020224:benchmark hdang$ ./mfind -g big_folder_regex
+ATH020224:benchmark hdang$ ./fast-find -g big_folder_regex
 Celero
 Timer resolution: 0.001000 us
 -----------------------------------------------------------------------------------------------------------------------------------------------
@@ -117,13 +117,13 @@ Timer resolution: 0.001000 us
 -----------------------------------------------------------------------------------------------------------------------------------------------
 big_folder_rege | gnu_find        |               0 |              20 |               1 |         1.00000 |    471865.00000 |            2.12 |
 big_folder_rege | fd              |               0 |              20 |               1 |         0.96650 |    456056.00000 |            2.19 |
-big_folder_rege | mfind_default   |               0 |              20 |               1 |         0.54251 |    255993.00000 |            3.91 |
-big_folder_rege | mfind_dfs       |               0 |              20 |               1 |         0.53523 |    252554.00000 |            3.96 |
+big_folder_rege | fast-find_default   |               0 |              20 |               1 |         0.54251 |    255993.00000 |            3.91 |
+big_folder_rege | fast-find_dfs       |               0 |              20 |               1 |         0.53523 |    252554.00000 |            3.96 |
 Complete.
 ```
 
 ---
-# Why [mfind](https://github.com/hungptit/ioutils) is so fast? #
+# Why [fast-find](https://github.com/hungptit/ioutils) is so fast? #
 
 --
 
@@ -196,7 +196,7 @@ template <typename Container> void dfs(Container &&p) {
 ```
 
 ---
-# mlocate #
+# fast-locate #
 
 --
 
@@ -222,7 +222,7 @@ sys         23.45
 --
 
 ``` shell
-ATH020224:/ hdang$ /usr/bin/time -lp mupdatedb /usr/ /Users/ -d="/Users/hdang/.database"
+ATH020224:/ hdang$ /usr/bin/time -lp fast-updatedb /usr/ /Users/ -d="/Users/hdang/.database"
 real        56.82
 user         2.99
 sys         38.84
@@ -230,7 +230,7 @@ sys         38.84
 
 ---
 
-# GNU locate vs mlocate #
+# GNU locate vs fast-locate #
 
 --
 
@@ -252,7 +252,7 @@ sys     0m0.039s
 --
 
 ``` shell
-ATH020224:/ hdang$ time mlocate -d ~/.database 'fmt.*string.h'
+ATH020224:/ hdang$ time fast-locate -d ~/.database 'fmt.*string.h'
 /Users/hdang/working/backup/projects/projects/code_coverage/include/fmt/string.h
 /Users/hdang/working/backup/projects/projects/others/coverage/3p/fmt/fmt/string.h
 /Users/hdang/working/backup/projects/projects/graph/include/fmt/string.h
@@ -283,13 +283,13 @@ Timer resolution: 0.001000 us
      Group      |   Experiment    |   Prob. Space   |     Samples     |   Iterations    |    Baseline     |  us/Iteration   | Iterations/sec  |
 -----------------------------------------------------------------------------------------------------------------------------------------------
 regex           | gnu_locate      |               0 |              10 |               1 |         1.00000 |    649553.00000 |            1.54 |
-regex           | mlocate         |               0 |              10 |               1 |         0.06303 |     40943.00000 |           24.42 |
+regex           | fast-locate         |               0 |              10 |               1 |         0.06303 |     40943.00000 |           24.42 |
 Complete.
 ```
 
 ---
 
-# Why [mlocate](https://github.com/hungptit/tools) is so fast? #
+# Why [fast-locate](https://github.com/hungptit/tools) is so fast? #
 
 --
 
