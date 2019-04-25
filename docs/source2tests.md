@@ -88,14 +88,14 @@ class: center, middle
 --
 * What is the current number of Perl files?
 ``` shell
-mlocate '[.](pm|pl|t)$' | wc -l
+fast-locate '[.](pm|pl|t)$' | wc -l
 58258
 ```
 
 --
 * What is the current number of test files?
 ``` shell
-mlocate '(_Test[.]pm|[.]t)$' | wc -l
+fast-locate '(_Test[.]pm|[.]t)$' | wc -l
 14749
 ```
 

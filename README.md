@@ -156,7 +156,7 @@ hdang@macos ~/w/t/D/x/1/avx2> ./fast-find ./
 ./fast-updatedb
 ./.database
 ./fast-find
-./mwc
+./fast-wc
 ./fgrep
 ```
 
@@ -200,7 +200,7 @@ hdang@macos ~/w/t/D/x/1/avx2> ./fast-find --inverse-match find ./
 ./fast-updatedb
 ./.database
 ./fast-find
-./mwc
+./fast-wc
 ./fgrep
 ```
 
