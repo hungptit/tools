@@ -28,7 +28,7 @@ Our performance benchmark results show that:
 
 * **fgrep** is the fastest single thread text searching command.
 
-* **fast-find** is 1.5-2x faster than GNU find command.
+* **fast-find** is 1.5-2x faster than both GNU find and fd commands for normal use cases.
 
 * **codesearch** is faster than aglimpse and is as fast as Google codesearch for code searching purpose. The commercial version of codesearch is significantly faster than both **Google codesearch** and **aglimpse**.
 
