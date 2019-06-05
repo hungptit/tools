@@ -1,0 +1,7 @@
+#!/bin/bash
+user=${USER}
+echo "User: $user"
+pushd /
+search_path="Applications Library Network System Users Volumes bin cores dev etc home installer.failurerequests net opt private sbin usr var"
+fast-updatedb ${search_path} -d ${HOME}/.database
+popd
