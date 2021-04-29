@@ -129,15 +129,6 @@ codesearch '\w*;$' -p '(_Test[.]pm|[.]t)$' | wc -l
 
 --
 ``` shell
-The following are commands to execute the available automated tests:
-
- utest --ignorewip --failedonly --color WorkUnit::Daemon
-
- athenax perl-test WorkUnit::Daemon
- athenax perl-test WorkUnit::Daemon::Trap
-
-
-Did you verify that all the tests listed above pass? (yes/no)
 ```
 
 ---
@@ -146,11 +137,6 @@ Did you verify that all the tests listed above pass? (yes/no)
 --
 
 ``` shell
-source2tests '(WorkUnit::Daemon|ScaleMonitor)' --perl-tap-tests | wc
-     62      62    4517
-
-source2tests '(WorkUnit::Daemon|ScaleMonitor)' --perl-legacy-tests | wc
-      3       3     151
 ```
 
 ---
@@ -322,7 +308,7 @@ class: center, middle
 
 --
 ``` shell
-codesearch 'WorkUnit::Daemon::Trap->new'
+codesearch 'search_pattern'
 ```
 
 ---
@@ -332,17 +318,11 @@ codesearch 'WorkUnit::Daemon::Trap->new'
 --
 * A simple aglimpse command
 ``` shell
-aglimpse 'SafeUse\(' | grep -E 'prod.*_Test[.]pm' |  wc -l
-272
 ```
 
 --
 * Equivalent commands using codesearch/source2tests
 ``` shell
-codesearch 'SafeUse\(' -p 'prod.*_Test[.]pm' |  wc -l
-272
-source2tests 'SafeUse\(' -p 'prod.*_Test[.]pm' |  wc -l
-70
 ```
 
 ---
@@ -350,9 +330,6 @@ source2tests 'SafeUse\(' -p 'prod.*_Test[.]pm' |  wc -l
 # More options #
 
 ``` shell
-linux:~> codesearch maketrap -p '.*trap*[.]t$' -c -i
-prod//test/perl/WorkUnit/Daemon/ScaleMonitor/t/unit/make_trap.t:28:     $monitor->MakeTrap({
-prod//test/perl/WorkUnit/Daemon/ScaleMonitor/t/unit/make_trap.t:66:     $monitor->MakeTrap({
 ```
 
 ---
@@ -378,28 +355,18 @@ class: center, middle
 --
 * Find all TAP tests related to **WorkUnit::Daemon**
 ``` shell
-linux:~> time source2tests WorkUnit::Daemon --perl-tap-tests | wc
-0.37user 0.35system 0:00.72elapsed 101%CPU (0avgtext+0avgdata 145984maxresident)k
-0inputs+0outputs (0major+56347minor)pagefaults 0swaps
-     62      62    4517
 ```
 
 --
 * Find all tests that use/require **Document**
 ``` shell
-time source2tests '(use|require)\s+Document' -p '(_Test[.]pm|[.]t)$' | wc
-1.19user 1.16system 0:02.33elapsed 101%CPU (0avgtext+0avgdata 228732maxresident)k
-0inputs+0outputs (0major+157566minor)pagefaults 0swaps
-    263     263   17979
 ```
 
 --
 * Get the coverage report for WorkUnit::Daemon::Trap package
 
 ``` shell
-~hdang/bin/code_coverage_report.sh WorkUnit::Daemon::Trap
 ```
-
 ---
 
 # How can we use these commands in our development/staging environments? #
